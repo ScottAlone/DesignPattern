@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="8" tilewidth="70" tileheight="70" nextobjectid="2">
+ <tileset firstgid="1" name="map" tilewidth="70" tileheight="70">
+  <image source="map.png" width="980" height="490"/>
+ </tileset>
+ <layer name="ground" width="60" height="8">
+  <data encoding="base64" compression="zlib">
+   eJyTY2BgkANidhxYbJhhuVH/jvp3GOFR/476dzjhkeZfAIKfJvE=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="1" name="PlayerPoint" x="141" y="210" width="66" height="68"/>
+ </objectgroup>
+</map>

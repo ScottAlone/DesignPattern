@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="10" tilewidth="70" tileheight="70" nextobjectid="2">
+ <tileset firstgid="1" name="map" tilewidth="70" tileheight="70">
+  <image source="map.png" width="210" height="350"/>
+ </tileset>
+ <tileset firstgid="16" name="meta_tiles" tilewidth="70" tileheight="70">
+  <image source="meta_tiles.jpg" width="210" height="70"/>
+  <tile id="0">
+   <properties>
+    <property name="win" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="food" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Collidable" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="ground" width="300" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzt2jkKxDAQBEAZvD52ffz/t57AAgcKNvMIKqi8o4aGnkopE0AHPg8DQELjbQ5LWBNkAmipffUNv7AlyATQUvtqD0c4E2QCaLEHgV7Yg0Av7EGgF7Wv/BmA7Gpfvf3/AvjXBaUzGG0=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="1" name="PlayerPoint" x="64" y="350" width="76" height="71"/>
+ </objectgroup>
+ <layer name="barrier" width="300" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztmeEKhTAIhWN7/3fuVzDEuXOcQYvzQVxoJ127abquSwgh/ktPXteGA9GyZOf1Byr+E3sIcQr2+c/kmB6MtYnuGYvGR80qtqI4tPPb0TK62doi94TmFdS39T/+CnEiUVz0QXMFOs9mdH5lJ+OHrUFWc6zWjTml4v7ZtWygbyG+CvLMo3H5jCHxjebHFWzsIfbfzleRlrn/TL5CbQvxVZB37m4eYfdRVpo+0VXsne32ZJ7OrnFVfYXWaqMu6h2FOIHdOLd9WVW/x/hF7NrxaL8nsolcZ8+/ka88bbR/htoW4oswNQJjyyPan5+961e5j8mTbG24W1NGe3/ZfOWtIdKfZ+pQIU4h872Mge3JUB1aCzG+K/pBT+/Nr9q3EEIIIeq5AWtVAlY=
+  </data>
+ </layer>
+ <layer name="meta" width="300" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKgCAQQFGPkN3/sCG0CEHUSoV6D8Slrj4zIQB81776A8CvbOcpyZsUb7yha8Abar26iqHcK00CRmvtVcxugNl65qs0Q9V6Zc4CRunpVWK+Albp2QfzAzBT73yVa93/7InAU097BTDbAUV+Al0=
+  </data>
+ </layer>
+</map>

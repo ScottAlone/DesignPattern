@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="10" tilewidth="70" tileheight="70" nextobjectid="7">
+ <tileset firstgid="1" name="ground(2)" tilewidth="70" tileheight="70">
+  <image source="ground(2).jpg" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="2" name="ground(3)" tilewidth="70" tileheight="70">
+  <image source="ground(3).jpg" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="3" name="ground(4)" tilewidth="70" tileheight="70">
+  <image source="ground(4).jpg" width="220" height="220"/>
+ </tileset>
+ <tileset firstgid="12" name="ground(5)" tilewidth="70" tileheight="70">
+  <image source="ground(5).jpg" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="13" name="Collidable" tilewidth="70" tileheight="70">
+  <image source="Collidable.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="14" name="food" tilewidth="70" tileheight="70">
+  <image source="food.jpg" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="15" name="meta_tiles" tilewidth="70" tileheight="70">
+  <image source="meta_tiles.jpg" width="210" height="70"/>
+  <tile id="0">
+   <properties>
+    <property name="win" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="food" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Collidable" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="18" name="ground(1)" tilewidth="70" tileheight="70">
+  <image source="ground(1).png" width="70" height="70"/>
+ </tileset>
+ <layer name="ground" width="300" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzt2rsOgzAQBEBDeCRAxf9/LFdgicJFOs7SFNNvtdJKO5RSBoAOjA8nQELH7ROmMCfIBNBS+2oJa/gmyATQUvvqF7awJ8gE0GIPAr2wB4Fe2INAL2pf+TMA2dW+evv/BfCvC0UiqZM=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="6" name="PlayerPoint" x="110" y="210" width="100" height="100"/>
+ </objectgroup>
+ <layer name="barrier" width="300" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztWltuAzEIzAXS+x+3X5EsBPMA0iqRR1o17Q4YbDwmu308Li4uLr4Xz6bdz3G9C93YvgEb6xKvT8L22nf9/VUNfkqtd+I8a0+xjxyldiPnCe4h7us+i1ndW2gfxhgnXIdXza+Sk6or6thx/PMn85n5iGNMeEqOyCazfR5cxbYavxPfGYNjg+ZJwU/x+fSt1nQFhYNijzlOz180BqvzzCe7x3x1xnLnwNknG7xTUzbyd+fyVSdoz2SxojGmc6XobGWj1BmzVX2oeSoxODYRqNfozMckloy77dcdw8kTaV+0VTWSwc1d8f9uvUJcJ/+OXjF+xWG5dXVNiaXS0g3bieYp2Djrq3O4qiek/eqZPtGfrV4kg3LWb2hI1o8ifWMcpc914mOxTnlxnrf6K7VXO3lKT/MuzT7XjcWu9kiT3szRPMZXdIXxO3tM2b8djVX8VzrprKuL6R6PMW/3hFv9X3bfqXXXLv79HXqVcdHzM+Y7i9Ht3xzexGbDdqJ5Cjb6q4rj6FCH19Ufps9dvXL6A8dXBZR/dTY5Z7B7XjPe9NkNev7X1atsDlnO1ZX5jjFGLns3gpDxJjYbtq52V78ze2TD1qjaN8oeijWIvg+iONj6qmdnxpmi867MhVNr7n6M6DyHV3Xc0XtlHrfHdtDRE8RjtaquWWWjaiSyrXyg++wcc98Pnj7/A52xN77Lfsr/bFxcXFxE/AJvvh9b
+  </data>
+ </layer>
+ <layer name="meta" width="300" height="10" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztWQFuw0AI6w+2/v+z06RFQgiMDaRTq7MUrV0Mx3GcjyaPx8HBwcHn4tm0+zbXXejG9gnYWBd/vRO2177r71U1+C613onT1t6v/dffxY7B1K7nPME9xL3u+5ij8Zi9hfahj3HCVXhZfpk5sbrCju3Ht38rn5EPP8aEx8wR2US2T8NlbLPxO/HZGBQblCcG38ln65ut6QwMB8Xu52i/V3rlx0B5t3Gwuaz0hfHVGUvVemWfbPCspmzMX83lVSdoz0SxojGmuWJ0NrNh6qyyZX2w82RiUGw8UK/Ryccklojb8cvq1WTdM253/S9U+wP5ZMD4v1uvEFeZf0evKn7GqebW1TUmlkxLN2wnmsdg46zPzuGsnpD2s2f6RH/Us1jpr5izfkNDon4U6VvFYfpcJb4q1inP53mrv2J7Nctjepq7NNuuWxU72yNNejNF8yo+oysVv7PHmP3b0VjGf6aTyroqelX5VsdnczPJH7qn6oBS66qd//8dehVx0fOzyncUo9q/KbyJzYbtRPMYbPRXGUfRoQ6vqz+VPnf1SukPFF8Z0Pyzs0k5g9XzuuJNn92g539dvYpyWM05uyLfPkbPrd6NIES8ic2Grard2ffKHtlUa5TtG2YP+RpEvwdRHNX6smdnxFH7K4/OuzIVSq2p+9Gj8xye1XFF75k8bo+toKMniFfVKrtmmQ2rkcg284HuV+eY+n7Q+vwPdMbe+C17+Zjq1cHBwcGr8QMrHSWP
+  </data>
+ </layer>
+</map>
