@@ -1,4 +1,5 @@
 #include "Entity.h"
+//test for e.g
 
 void Entity::bindSprite(Sprite* sprite)
 {
