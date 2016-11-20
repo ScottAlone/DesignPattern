@@ -1,6 +1,8 @@
 #include "HelpScene.h"
 #include "TollgateScene.h"
+#include <string>
 
+using  std::string;
 USING_NS_CC;
 
 Scene* HelpScene::createScene() {
@@ -9,6 +11,13 @@ Scene* HelpScene::createScene() {
 	scene->addChild(layer);
 
 	return scene;
+}
+
+void HelpScene::createLabel(string content, string font, int size, int width, int height){
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Label* Lab = Label::createWithSystemFont(content, font, size);
+	Lab->setPosition(Point(width, height));
+	this->addChild(Lab);
 }
 
 bool HelpScene::init() {
@@ -33,30 +42,12 @@ bool HelpScene::init() {
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
-
-	Label* Lab = Label::createWithSystemFont("Introduction", "Arial", 60);
-	Lab->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2+275));
-	this->addChild(Lab);
-
-	Label* Lab1 = Label::createWithSystemFont("The tank is running on the road!", "Arial", 45);
-	Lab1->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2+200));
-	this->addChild(Lab1);
-	
-	Label* Lab2 = Label::createWithSystemFont("Try to avoid            !", "Arial", 45);
-	Lab2->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2+100));
-	this->addChild(Lab2);
-
-	Label* Lab3 = Label::createWithSystemFont("Pick up             to increase your score!", "Arial", 45);
-	Lab3->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2));
-	this->addChild(Lab3);
-
-	Label* Lab4 = Label::createWithSystemFont("Use your mouse to move.", "Arial", 45);
-	Lab4->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2-100));
-	this->addChild(Lab4);
-
-	Label* Lab5 = Label::createWithSystemFont("Good luck!", "Arial", 45);
-	Lab5->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2-200));
-	this->addChild(Lab5);
+	createLabel("Introduction", "Arial", 60, visibleSize.width / 2, visibleSize.height / 2 + 275);
+	createLabel("The tank is running on the road!", "Arial", 45, visibleSize.width / 2, visibleSize.height / 2 + 200);
+	createLabel("Try to avoid            !", "Arial", 45, visibleSize.width / 2, visibleSize.height / 2 + 100);
+	createLabel("Pick up             to increase your score!", "Arial", 45, visibleSize.width / 2, visibleSize.height / 2);
+	createLabel("Use your mouse to move.", "Arial", 45, visibleSize.width / 2, visibleSize.height / 2 - 100);
+	createLabel("Good luck!", "Arial", 45, visibleSize.width / 2, visibleSize.height / 2 - 200);
 
 	auto sprite1 = Sprite::create("Collidable.png");
 
