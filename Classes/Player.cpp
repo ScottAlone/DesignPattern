@@ -5,6 +5,9 @@
 #include "HelloWorldScene.h"
 #include "LoseScene.h"
 
+rollBackData *data[10000];
+int frameCount = 0;
+int chance = 1;
 int Player::Score = 0;
 bool Player::init() {
 	isJumping = false;
@@ -29,6 +32,7 @@ void Player::run() {
 
 	/* 创建动画动作 */
 	Animate* animate = Animate::create(animation);
+
 
 	/* 精灵执行动作 */
 	m_sprite->runAction(animate);
@@ -85,6 +89,10 @@ void Player::setTagPosition(int x, int y) {
 	Size spriteSize = m_sprite->getContentSize();
 	Point dstPos = Point(x + spriteSize.width / 2, y);
 
+	/*对每帧都实例化一个回滚类对象，用于存储状态*/
+	data[frameCount] = new rollBackData(Point(x, y), Score);
+	frameCount++;
+
 	/* 获得当前主角前方坐标在地图中的格子位置 */
 	Point tiledPos = tileCoordForPosition(Point(dstPos.x, dstPos.y));
 
@@ -113,24 +121,23 @@ void Player::setTagPosition(int x, int y) {
 				auto jumpBy = JumpBy::create(0.5f, Point(-100, 0), 80, 1);
 				CallFunc* callfunc = CallFunc::create([&](){
 					/* 恢复状态 */
-					isJumping = false;
+					rollBack();
 				});
 
 				/* 执行动作，碰撞到障碍物时的反弹效果 */
 				auto actions = Sequence::create(jumpBy, callfunc, NULL);
 				this->runAction(actions);
-
 				FlowWord* flowWord = FlowWord::create();
 				this->addChild(flowWord);
 				flowWord->showWord("oh no!", m_sprite->getPosition());
-				Score = 0;
+				//Score = 0;
 
 				//stopAllActions();	/* 先停止所有正在执行的动作 */
 				//resetData();		/* 重置数据 */
 				//TMXLayer* barrier = m_map->getLayer("barrier");
 				//barrier->removeTileAt(tiledPos);
 				//removeChild(this, true);
-				Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene()));
+				isOver();
 			}
 		}
 		if (propertiesMap.find("food") != propertiesMap.end())
@@ -141,7 +148,6 @@ void Player::setTagPosition(int x, int y) {
 				/* 从障碍物层清除当前格子的物体 */
 				TMXLayer* barrier = m_map->getLayer("barrier");
 				barrier->removeTileAt(tiledPos);
-
 				Score += 1;
 			}
 		}
@@ -191,7 +197,40 @@ Point Player::tileCoordForPosition(Point pos) {
 	return Point(x, y);
 }
 
+void Player::rollBack(){
+	/*回退到两秒以前的状态*/
+	int t = frameCount - 60 * 2;
 
+	/*如果距离游戏开始不到两秒，则回退到0秒的状态*/
+	if (t < 0)
+		t = 0;
+
+	/*如果还有一次机会，则回退*/
+	if (chance != 0)
+	{
+		Score = data[t]->getScore();
+		Entity::setTagPosition(data[t]->getPointx(), data[t]->getPointy());
+	}
+	chance--;
+	isJumping = false;
+}
+
+void Player::isOver()
+{
+	if (chance == 0)
+	{
+		/*机会用完则展示失败场景*/
+		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene()));
+
+		/*重置相关数据*/
+		memset(data, 0, sizeof(data));
+		frameCount = 0;
+		Score = 0;
+	}
+	else if (chance < 0)
+		/*点击try again后恢复机会数*/
+		chance = 1;
+}
 
 //int Player::getScore() {
 //	return this->Score;
