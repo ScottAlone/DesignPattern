@@ -20,21 +20,21 @@ void Player::run() {
 	Vector<SpriteFrame*> frameVec;
 
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* ÓÃÃ¿Ò»ÕÅÍ¼Æ¬´´½¨SpriteFrame¶ÔÏó */
+		/* ç”¨æ¯ä¸€å¼ å›¾ç‰‡åˆ›å»ºSpriteFrameå¯¹è±¡ */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
 	;
-	//* ¸ù¾İ¾«ÁéÖ¡¶ÔÏó´´½¨¶¯»­¶ÔÏó */
+	//* æ ¹æ®ç²¾çµå¸§å¯¹è±¡åˆ›å»ºåŠ¨ç”»å¯¹è±¡ */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
-	animation->setLoops(-1);    // Ñ­»·²¥·Å
-	animation->setDelayPerUnit(0.04f);  // Ã¿Ö¡²¥·Å¼ä¸ô
+	animation->setLoops(-1);    // å¾ªç¯æ’­æ”¾
+	animation->setDelayPerUnit(0.04f);  // æ¯å¸§æ’­æ”¾é—´éš”
 
-	/* ´´½¨¶¯»­¶¯×÷ */
+	/* åˆ›å»ºåŠ¨ç”»åŠ¨ä½œ */
 	Animate* animate = Animate::create(animation);
 
 
-	/* ¾«ÁéÖ´ĞĞ¶¯×÷ */
+	/* ç²¾çµæ‰§è¡ŒåŠ¨ä½œ */
 	m_sprite->runAction(animate);
 
 }
@@ -45,128 +45,118 @@ void Player::setViewPointByPlayer() {
 	}
 	Layer* parent = (Layer*)getParent();
 
-	/* µØÍ¼·½¿éÊıÁ¿ */
+	/* åœ°å›¾æ–¹å—æ•°é‡ */
 	Size mapTiledNum = m_map->getMapSize();
 
-	/* µØÍ¼µ¥¸ö¸ñ×Ó´óĞ¡ */
+	/* åœ°å›¾å•ä¸ªæ ¼å­å¤§å° */
 	Size tiledSize = m_map->getTileSize();
 
-	/*µØÍ¼´óĞ¡ */
+	/*åœ°å›¾å¤§å° */
 	Size mapSize = Size(
 		mapTiledNum.width * tiledSize.width,
 		mapTiledNum.height * tiledSize.height);
 
-	/* ÆÁÄ»´óĞ¡ */
+	/* å±å¹•å¤§å° */
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	/* Ö÷½Ç×ø±ê */
+	/* ä¸»è§’åæ ‡ */
 	Point spritePos = getPosition();
 
-	/* Èç¹ûÖ÷½Ç×ø±êĞ¡ÓÚÆÁÄ»µÄÒ»°ë£¬ÔòÈ¡ÆÁÄ»ÖĞµã×ø±ê£¬·ñÔòÈ¡Ö÷½ÇµÄ×ø±ê */
+	/* å¦‚æœä¸»è§’åæ ‡å°äºå±å¹•çš„ä¸€åŠï¼Œåˆ™å–å±å¹•ä¸­ç‚¹åæ ‡ï¼Œå¦åˆ™å–ä¸»è§’çš„åæ ‡ */
 	float x = std::max(spritePos.x, visibleSize.width / 2);
 	float y = std::max(spritePos.y, visibleSize.height / 2);
 
-	/* Èç¹ûX¡¢YµÄ×ø±ê´óÓÚÓÒÉÏ½ÇµÄ¼«ÏŞÖµ£¬ÔòÈ¡¼«ÏŞÖµµÄ×ø±ê£¨¼«ÏŞÖµÊÇÖ¸²»ÈÃµØÍ¼³¬³ö
-	ÆÁÄ»Ôì³É³öÏÖºÚ±ßµÄ¼«ÏŞ×ø±ê£© */
+	/* å¦‚æœXã€Yçš„åæ ‡å¤§äºå³ä¸Šè§’çš„æé™å€¼ï¼Œåˆ™å–æé™å€¼çš„åæ ‡ï¼ˆæé™å€¼æ˜¯æŒ‡ä¸è®©åœ°å›¾è¶…å‡º
+	å±å¹•é€ æˆå‡ºç°é»‘è¾¹çš„æé™åæ ‡ï¼‰ */
 	x = std::min(x, mapSize.width - visibleSize.width / 2);
 	y = std::min(y, mapSize.height - visibleSize.height / 2);
 
-	/* Ä¿±êµã */
+	/* ç›®æ ‡ç‚¹ */
 	Point destPos = Point(x, y);
 
-	/* ÆÁÄ»ÖĞµã */
+	/* å±å¹•ä¸­ç‚¹ */
 	Point centerPos = Point(visibleSize.width / 2, visibleSize.height / 2);
 
-	/* ¼ÆËãÆÁÄ»ÖĞµãºÍËùÒªÒÆ¶¯µÄÄ¿µÄµãÖ®¼äµÄ¾àÀë */
+	/* è®¡ç®—å±å¹•ä¸­ç‚¹å’Œæ‰€è¦ç§»åŠ¨çš„ç›®çš„ç‚¹ä¹‹é—´çš„è·ç¦» */
 	Point viewPos = centerPos - destPos;
 
 	parent->setPosition(viewPos);
 }
 
+void Player::context(ValueMap num1, Point tiledPos) {
+	int result = 0;
+	if ((num1.find("Collidable") != num1.end()) && (num1.at("Collidable").asString().compare("true") == 0 && isJumping == false))
+		doOperationCollidable();
+	if (num1.find("food") != num1.end() && num1.at("food").asString().compare("true") == 0)
+		doOperationfood(tiledPos);
+	if (num1.find("win") != num1.end() && num1.at("win").asString().compare("true") == 0)
+		doOperationwin();
+}
+void Player::doOperationCollidable(){
+	isJumping = true;
+
+	auto jumpBy = JumpBy::create(0.5f, Point(-100, 0), 80, 1);
+	CallFunc* callfunc = CallFunc::create([&](){
+		/* æ¢å¤çŠ¶æ€ */
+		rollBack();
+	});
+
+	/* æ‰§è¡ŒåŠ¨ä½œï¼Œç¢°æ’åˆ°éšœç¢ç‰©æ—¶çš„åå¼¹æ•ˆæœ */
+	auto actions = Sequence::create(jumpBy, callfunc, NULL);
+	this->runAction(actions);
+	FlowWord* flowWord = FlowWord::create();
+	this->addChild(flowWord);
+	flowWord->showWord("oh no!", m_sprite->getPosition());
+	//Score = 0;
+
+	//stopAllActions();	/* å…ˆåœæ­¢æ‰€æœ‰æ­£åœ¨æ‰§è¡Œçš„åŠ¨ä½œ */
+	//resetData();		/* é‡ç½®æ•°æ® */
+	//TMXLayer* barrier = m_map->getLayer("barrier");
+	//barrier->removeTileAt(tiledPos);
+	//removeChild(this, true);
+	isOver();
+}
+void Player::doOperationfood(Point tiledPos){
+	/* ä»éšœç¢ç‰©å±‚æ¸…é™¤å½“å‰æ ¼å­çš„ç‰©ä½“ */
+	TMXLayer* barrier = m_map->getLayer("barrier");
+	barrier->removeTileAt(tiledPos);
+	Score += 1;
+}
+void Player::doOperationwin(){
+	/* å–å¾—æ ¼å­çš„winå±æ€§å€¼ï¼Œåˆ¤æ–­æ˜¯å¦ä¸ºtrueï¼Œå¦‚æœæ˜¯ï¼Œåˆ™æ¸¸æˆèƒœåˆ©ï¼Œè·³è½¬åˆ°èƒœåˆ©åœºæ™¯ */
+	Director::getInstance()->replaceScene(WinScene::createScene());
+}
+
 void Player::setTagPosition(int x, int y) {
-	/* -----------------ÅĞ¶ÏÇ°ÃæÊÇ·ñ²»¿ÉÍ¨ĞĞ---------------- */
-	/* È¡Ö÷½ÇÇ°·½µÄ×ø±ê */
+	/* -----------------åˆ¤æ–­å‰é¢æ˜¯å¦ä¸å¯é€šè¡Œ---------------- */
+	/* å–ä¸»è§’å‰æ–¹çš„åæ ‡ */
 	Size spriteSize = m_sprite->getContentSize();
 	Point dstPos = Point(x + spriteSize.width / 2, y);
 
-	/*¶ÔÃ¿Ö¡¶¼ÊµÀı»¯Ò»¸ö»Ø¹öÀà¶ÔÏó£¬ÓÃÓÚ´æ´¢×´Ì¬*/
+	/*å¯¹æ¯å¸§éƒ½å®ä¾‹åŒ–ä¸€ä¸ªå›æ»šç±»å¯¹è±¡ï¼Œç”¨äºå­˜å‚¨çŠ¶æ€*/
 	data[frameCount] = new rollBackData(Point(x, y), Score);
 	frameCount++;
 
-	/* »ñµÃµ±Ç°Ö÷½ÇÇ°·½×ø±êÔÚµØÍ¼ÖĞµÄ¸ñ×ÓÎ»ÖÃ */
+	/* è·å¾—å½“å‰ä¸»è§’å‰æ–¹åæ ‡åœ¨åœ°å›¾ä¸­çš„æ ¼å­ä½ç½® */
 	Point tiledPos = tileCoordForPosition(Point(dstPos.x, dstPos.y));
-
-	/* »ñÈ¡µØÍ¼¸ñ×ÓµÄÎ¨Ò»±êÊ¶ */
+	/* è·å–åœ°å›¾æ ¼å­çš„å”¯ä¸€æ ‡è¯† */
 	int tiledGid = meta->getTileGIDAt(tiledPos);
-
-	/* ²»Îª0£¬´ú±í´æÔÚÕâ¸ö¸ñ×Ó */
+	/* ä¸ä¸º0ï¼Œä»£è¡¨å­˜åœ¨è¿™ä¸ªæ ¼å­ */
 	if (tiledGid != 0) {
 		/*
-		»ñÈ¡¸ÃµØÍ¼¸ñ×ÓµÄËùÓĞÊôĞÔ£¬Ä¿Ç°ÎÒÃÇÖ»ÓĞÒ»¸öCollidableÊôĞÔ
-		¸ñ×ÓÊÇÊôÓÚmeta²ãµÄ£¬µ«Í¬Ê±Ò²ÊÇÊôÓÚÕû¸öµØÍ¼µÄ£¬ËùÒÔÔÚ»ñÈ¡¸ñ×ÓµÄËùÓĞÊôĞÔ
-		Ê±£¬Í¨¹ı¸ñ×ÓÎ¨Ò»±êÊ¶ÔÚµØÍ¼ÖĞÈ¡µÃ
+		è·å–è¯¥åœ°å›¾æ ¼å­çš„æ‰€æœ‰å±æ€§ï¼Œç›®å‰æˆ‘ä»¬åªæœ‰ä¸€ä¸ªCollidableå±æ€§
+		æ ¼å­æ˜¯å±äºmetaå±‚çš„ï¼Œä½†åŒæ—¶ä¹Ÿæ˜¯å±äºæ•´ä¸ªåœ°å›¾çš„ï¼Œæ‰€ä»¥åœ¨è·å–æ ¼å­çš„æ‰€æœ‰å±æ€§
+		æ—¶ï¼Œé€šè¿‡æ ¼å­å”¯ä¸€æ ‡è¯†åœ¨åœ°å›¾ä¸­å–å¾—
 		*/
+
 		Value properties = m_map->getPropertiesForGID(tiledGid);
-
 		ValueMap propertiesMap = properties.asValueMap();
-
-		if (propertiesMap.find("Collidable") != propertiesMap.end())
-		{
-			/* È¡µÃ¸ñ×ÓµÄCollidableÊôĞÔÖµ */
-			Value prop = propertiesMap.at("Collidable");
-			/* ÅĞ¶ÏCollidableÊôĞÔÊÇ·ñÎªtrue£¬Èç¹ûÊÇ£¬Ôò²»ÈÃÍæ¼ÒÒÆ¶¯ */
-			if (prop.asString().compare("true") == 0 && isJumping == false) {
-				isJumping = true;
-
-				auto jumpBy = JumpBy::create(0.5f, Point(-100, 0), 80, 1);
-				CallFunc* callfunc = CallFunc::create([&](){
-					/* »Ö¸´×´Ì¬ */
-					rollBack();
-				});
-
-				/* Ö´ĞĞ¶¯×÷£¬Åö×²µ½ÕÏ°­ÎïÊ±µÄ·´µ¯Ğ§¹û */
-				auto actions = Sequence::create(jumpBy, callfunc, NULL);
-				this->runAction(actions);
-				FlowWord* flowWord = FlowWord::create();
-				this->addChild(flowWord);
-				flowWord->showWord("oh no!", m_sprite->getPosition());
-				//Score = 0;
-
-				//stopAllActions();	/* ÏÈÍ£Ö¹ËùÓĞÕıÔÚÖ´ĞĞµÄ¶¯×÷ */
-				//resetData();		/* ÖØÖÃÊı¾İ */
-				//TMXLayer* barrier = m_map->getLayer("barrier");
-				//barrier->removeTileAt(tiledPos);
-				//removeChild(this, true);
-				isOver();
-			}
-		}
-		if (propertiesMap.find("food") != propertiesMap.end())
-		{
-			/* È¡µÃ¸ñ×ÓµÄfoodÊôĞÔÖµ£¬ÅĞ¶ÏÊÇ·ñÎªtrue£¬Èç¹ûÊÇ£¬ÔòÈÃ¸ñ×ÓÉÏµÄÎïÌåÏûÊ§ */
-			Value prop = properties.asValueMap().at("food");
-			if (prop.asString().compare("true") == 0) {
-				/* ´ÓÕÏ°­Îï²ãÇå³ıµ±Ç°¸ñ×ÓµÄÎïÌå */
-				TMXLayer* barrier = m_map->getLayer("barrier");
-				barrier->removeTileAt(tiledPos);
-				Score += 1;
-			}
-		}
-
-		if (propertiesMap.find("win") != propertiesMap.end())
-		{
-			/* È¡µÃ¸ñ×ÓµÄfoodÊôĞÔÖµ£¬ÅĞ¶ÏÊÇ·ñÎªtrue£¬Èç¹ûÊÇ£¬ÔòÈÃ¸ñ×ÓÉÏµÄÎïÌåÏûÊ§ */
-			Value prop = properties.asValueMap().at("win");
-			if (prop.asString().compare("true") == 0) {
-				/* È¡µÃ¸ñ×ÓµÄwinÊôĞÔÖµ£¬ÅĞ¶ÏÊÇ·ñÎªtrue£¬Èç¹ûÊÇ£¬ÔòÓÎÏ·Ê¤Àû£¬Ìø×ªµ½Ê¤Àû³¡¾° */
-				Director::getInstance()->replaceScene(WinScene::createScene());
-			}
-		}
+		context(propertiesMap, tiledPos);
 	}
-
 
 	Entity::setTagPosition(x, y);
 
-	/* ÒÔÖ÷½ÇÎªÖĞĞÄÒÆ¶¯µØÍ¼ */
+	/* ä»¥ä¸»è§’ä¸ºä¸­å¿ƒç§»åŠ¨åœ°å›¾ */
 	setViewPointByPlayer();
 }
 
@@ -183,10 +173,10 @@ Point Player::tileCoordForPosition(Point pos) {
 
 	int x = pos.x / tiledSize.width;
 
-	/* Cocos2d-xµÄÄ¬ÈÏY×ø±êÊÇÓÉÏÂÖÁÉÏµÄ£¬ËùÒÔÒª×öÒ»¸öÏà¼õ²Ù×÷ */
+	/* Cocos2d-xçš„é»˜è®¤Yåæ ‡æ˜¯ç”±ä¸‹è‡³ä¸Šçš„ï¼Œæ‰€ä»¥è¦åšä¸€ä¸ªç›¸å‡æ“ä½œ */
 	int y = (700 - pos.y) / tiledSize.height;
 
-	/* ¸ñ×Ó×ø±ê´ÓÁã¿ªÊ¼¼ÆËã */
+	/* æ ¼å­åæ ‡ä»é›¶å¼€å§‹è®¡ç®— */
 	if (x > 0) {
 		x -= 1;
 	}
@@ -198,14 +188,14 @@ Point Player::tileCoordForPosition(Point pos) {
 }
 
 void Player::rollBack(){
-	/*»ØÍËµ½Á½ÃëÒÔÇ°µÄ×´Ì¬*/
+	/*å›é€€åˆ°ä¸¤ç§’ä»¥å‰çš„çŠ¶æ€*/
 	int t = frameCount - 60 * 2;
 
-	/*Èç¹û¾àÀëÓÎÏ·¿ªÊ¼²»µ½Á½Ãë£¬Ôò»ØÍËµ½0ÃëµÄ×´Ì¬*/
+	/*å¦‚æœè·ç¦»æ¸¸æˆå¼€å§‹ä¸åˆ°ä¸¤ç§’ï¼Œåˆ™å›é€€åˆ°0ç§’çš„çŠ¶æ€*/
 	if (t < 0)
 		t = 0;
 
-	/*Èç¹û»¹ÓĞÒ»´Î»ú»á£¬Ôò»ØÍË*/
+	/*å¦‚æœè¿˜æœ‰ä¸€æ¬¡æœºä¼šï¼Œåˆ™å›é€€*/
 	if (chance != 0)
 	{
 		Score = data[t]->getScore();
@@ -219,16 +209,16 @@ void Player::isOver()
 {
 	if (chance == 0)
 	{
-		/*»ú»áÓÃÍêÔòÕ¹Ê¾Ê§°Ü³¡¾°*/
+		/*æœºä¼šç”¨å®Œåˆ™å±•ç¤ºå¤±è´¥åœºæ™¯*/
 		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene()));
 
-		/*ÖØÖÃÏà¹ØÊı¾İ*/
+		/*é‡ç½®ç›¸å…³æ•°æ®*/
 		memset(data, 0, sizeof(data));
 		frameCount = 0;
 		Score = 0;
 	}
 	else if (chance < 0)
-		/*µã»÷try againºó»Ö¸´»ú»áÊı*/
+		/*ç‚¹å‡»try againåæ¢å¤æœºä¼šæ•°*/
 		chance = 1;
 }
 
