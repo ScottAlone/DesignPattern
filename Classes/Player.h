@@ -17,6 +17,10 @@ public:
 	void setTiledMap(TMXTiledMap* map);
 	void rollBack();
 	void isOver();
+	void context(ValueMap num1, Point tiledPos);
+	void doOperationCollidable();
+	void doOperationfood(Point tiledPos);
+	void doOperationwin();
 private:
 	TMXTiledMap* m_map;
 	bool isJumping;
