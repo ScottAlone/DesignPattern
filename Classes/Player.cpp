@@ -4,6 +4,7 @@
 #include "TollgateScene.h"
 #include "HelloWorldScene.h"
 #include "LoseScene.h"
+#include "Collidables.h"
 
 rollBackData *data[10000];
 int frameCount = 0;
@@ -95,7 +96,7 @@ void Player::context(ValueMap num1, Point tiledPos) {
 void Player::doOperationCollidable(){
 	isJumping = true;
 
-	auto jumpBy = JumpBy::create(0.5f, Point(-100, 0), 80, 1);
+	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
 	CallFunc* callfunc = CallFunc::create([&](){
 		/* 恢复状态 */
 		rollBack();
@@ -107,6 +108,7 @@ void Player::doOperationCollidable(){
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
 	flowWord->showWord("oh no!", m_sprite->getPosition());
+
 	//Score = 0;
 
 	//stopAllActions();	/* 先停止所有正在执行的动作 */
@@ -200,6 +202,7 @@ void Player::rollBack(){
 	{
 		Score = data[t]->getScore();
 		Entity::setTagPosition(data[t]->getPointx(), data[t]->getPointy());
+		randomEvent();
 	}
 	chance--;
 	isJumping = false;
@@ -229,5 +232,76 @@ void Player::isOver()
 void Player::resetData() {
 	if (isJumping) {
 		isJumping = false;
+	}
+}
+
+void Player::randomEvent()
+{
+	Size mapTiledNum = m_map->getMapSize();
+	Size tiledSize = m_map->getTileSize();
+	Size mapSize = Size(
+		mapTiledNum.width * tiledSize.width,
+		mapTiledNum.height * tiledSize.height);
+	FlowWord* flowWord = FlowWord::create();
+	this->addChild(flowWord);
+	/*根据当前分数对6求模获取相应碰撞事件*/
+	switch (Score % 6){
+	case 0:{  //分数x2
+			   Collidables* collidables = new CollidableOne();
+			   Score = collidables->change(Score);
+			   string t = collidables->getInfo().c_str();
+			   const char* tmp = t.c_str();
+			   flowWord->showWord(tmp, m_sprite->getPosition());
+			   break;
+	}
+	case 1:{  //运动距离x2
+			   Collidables* collidables = new CollidableTwo();
+			   if (data[frameCount - 1]->getPointx() * 2 <= mapSize.width){
+				   Entity::setTagPosition(data[frameCount - 1]->getPointx(), data[frameCount - 1]->getPointy());
+			   }
+			   else {
+				   Entity::setTagPosition(mapSize.width - 3 * tiledSize.width, data[frameCount - 1]->getPointy());
+			   }
+
+			   string t = collidables->getInfo().c_str();
+			   const char* tmp = t.c_str();
+			   flowWord->showWord(tmp, m_sprite->getPosition());
+			   break;
+	}
+	case 2:{  //运动距离/2
+			   Collidables* collidables = new CollidableThree();
+			   Entity::setTagPosition(data[frameCount - 1]->getPointx() / 2, data[frameCount - 1]->getPointy());
+			   string t = collidables->getInfo().c_str();
+			   const char* tmp = t.c_str();
+			   flowWord->showWord(tmp, m_sprite->getPosition());
+			   break;
+	}
+	case 3:{  //分数x4
+			   Collidables* collidables = new CollidableOne();
+			   collidables = new Collidable1(collidables);
+			   Score = collidables->change(Score);
+			   string t = collidables->getInfo().c_str();
+			   const char* tmp = t.c_str();
+			   flowWord->showWord(tmp, m_sprite->getPosition());
+			   break;
+	}
+	case 4:{  //运动到终点
+			   Collidables* collidables = new CollidableTwo();
+			   collidables = new Collidable2(collidables);
+			   Entity::setTagPosition(mapSize.width - 3 * tiledSize.width, data[frameCount - 1]->getPointy());
+			   string t = collidables->getInfo().c_str();
+			   const char* tmp = t.c_str();
+			   flowWord->showWord(tmp, m_sprite->getPosition());
+			   break;
+	}
+	case 5:{  //运动到起点
+			   Collidables* collidables = new CollidableThree();
+			   collidables = new Collidable3(collidables);
+			   Entity::setTagPosition(0, data[frameCount - 1]->getPointy());
+			   string t = collidables->getInfo().c_str();
+			   const char* tmp = t.c_str();
+			   flowWord->showWord(tmp, m_sprite->getPosition());
+			   break;
+	}
 	}
 }

@@ -21,6 +21,7 @@ public:
 	void doOperationCollidable();
 	void doOperationfood(Point tiledPos);
 	void doOperationwin();
+	void randomEvent();
 private:
 	TMXTiledMap* m_map;
 	bool isJumping;
