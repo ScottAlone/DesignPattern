@@ -2,6 +2,7 @@
 #define _Player_H_
 
 #include "Entity.h"
+#include "Observer.h"
 
 class Player : public Entity
 {
@@ -9,10 +10,10 @@ public:
 	CREATE_FUNC(Player);
 	virtual bool init();
 	virtual void setTagPosition(int x, int y) override;
-
 	void run();
 	void setViewPointByPlayer();
 	static int getScore(){ return Score; }
+	static int getHp();
 	void resetData();
 	void setTiledMap(TMXTiledMap* map);
 	void rollBack();

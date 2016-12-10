@@ -25,10 +25,10 @@ bool TollgateScene::init()
 
 	this->addChild(map);
 	addPlayer(map);
-	auto label = Label::createWithSystemFont("score:", "", 30);
+	auto label = Label::createWithSystemFont("score:  hp:", "", 30);
 	this->addChild(label, 10,"label");
-	label->setPosition(Vec2(75, 675));
-	label->setString(StringUtils::format("score:%d", Player::getScore()));
+	label->setPosition(Vec2(120, 665));
+	label->setString(StringUtils::format("score:%d hp:%d", Player::getScore(), Player::getHp()));
 	this->scheduleUpdate();
 	return true;
 }
@@ -73,5 +73,5 @@ void TollgateScene::addPlayer(TMXTiledMap* map) {
 
 void TollgateScene::update(float)
 {
-	static_cast<Label*>(this->getChildByName("label"))->setString(StringUtils::format("score:%d", Player::getScore()));
+	static_cast<Label*>(this->getChildByName("label"))->setString(StringUtils::format("score:%d hp:%d", Player::getScore(), Player::getHp()));
 }

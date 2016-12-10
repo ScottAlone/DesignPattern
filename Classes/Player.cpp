@@ -5,13 +5,20 @@
 #include "HelloWorldScene.h"
 #include "LoseScene.h"
 #include "Collidables.h"
+#include "Observer.h"
 
 rollBackData *data[10000];
 int frameCount = 0;
-int chance = 1;
+int chance = 3;
 int Player::Score = 0;
+HP *myHp = new MyHp();
 Mapsize *p1 = Mapsize::GetInstance();
+
 bool Player::init() {
+	Observer *observer1 = new ObserverHp(myHp);
+	myHp->Attach(observer1);
+	myHp->InitStatus(100);
+	myHp->Notify();
 	isJumping = false;
 	return true;
 }
@@ -72,6 +79,10 @@ void Player::setViewPointByPlayer() {
 	parent->setPosition(viewPos);
 }
 
+int Player::getHp(){
+	return myHp->GetStatus();
+}
+
 void Player::context(ValueMap num1, Point tiledPos) {
 	int result = 0;
 	if ((num1.find("Collidable") != num1.end()) && (num1.at("Collidable").asString().compare("true") == 0 && isJumping == false))
@@ -86,6 +97,7 @@ void Player::doOperationCollidable(){
 	isJumping = true;
 
 	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
+	isOver();
 	CallFunc* callfunc = CallFunc::create([&](){
 		/* 恢复状态 */
 		rollBack();
@@ -97,7 +109,6 @@ void Player::doOperationCollidable(){
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
 	flowWord->showWord("oh no!", m_sprite->getPosition());
-	isOver();
 }
 
 void Player::doOperationfood(Point tiledPos){
@@ -108,6 +119,10 @@ void Player::doOperationfood(Point tiledPos){
 }
 void Player::doOperationwin(){
 	/* 取得格子的win属性值，判断是否为true，如果是，则游戏胜利，跳转到胜利场景 */
+	Score = 0;
+	chance = 3;
+	myHp->InitStatus(100);
+	myHp->Notify();
 	Director::getInstance()->replaceScene(WinScene::createScene());
 }
 
@@ -178,14 +193,20 @@ void Player::rollBack(){
 	if (t < 0)
 		t = 0;
 
-	/*如果还有一次机会，则回退*/
-	if (chance != 0)
+	/*如果还有机会或血，则回退*/
+	if (chance > 0 && myHp->GetStatus() > 0)
 	{
 		Score = data[t]->getScore();
 		Entity::setTagPosition(data[t]->getPointx(), data[t]->getPointy());
 		switch (Score % 6)
 		{
+		case 0:
+			myHp->SetStatus(25);
+			myHp->Notify();
+			break;
 		case 1:
+			myHp->SetStatus(25);
+			myHp->Notify();
 			if (data[frameCount - 1]->getPointx() * 2 <= p1->getWidth()){
 				Entity::setTagPosition(data[frameCount - 1]->getPointx() * 2, data[frameCount - 1]->getPointy());
 			}
@@ -194,12 +215,20 @@ void Player::rollBack(){
 			}
 			break;
 		case 2:
+			myHp->SetStatus(50);
+			myHp->Notify();
 			Entity::setTagPosition(data[frameCount - 1]->getPointx() / 2, data[frameCount - 1]->getPointy());
+			break;
+		case 3:
+			myHp->SetStatus(50);
+			myHp->Notify();
 			break;
 		case 4:
 			Entity::setTagPosition(p1->getWidth() - 210, data[frameCount - 1]->getPointy());
 			break;
 		case 5:
+			myHp->SetStatus(25);
+			myHp->Notify();
 			Entity::setTagPosition(0, data[frameCount - 1]->getPointy());
 			break;
 		default:
@@ -213,7 +242,7 @@ void Player::rollBack(){
 
 void Player::isOver()
 {
-	if (chance == 0)
+	if (chance == 0 || myHp->GetStatus() <= 0)
 	{
 		/*机会用完则展示失败场景*/
 		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene()));
@@ -222,15 +251,16 @@ void Player::isOver()
 		memset(data, 0, sizeof(data));
 		frameCount = 0;
 		Score = 0;
+		myHp->InitStatus(100);
+		myHp->Notify();
 	}
-	else if (chance < 0)
+	else if (chance < 0){
 		/*点击try again后恢复机会数*/
-		chance = 1;
+		chance = 3;
+		myHp->InitStatus(100);
+		myHp->Notify();
+	}
 }
-
-//int Player::getScore() {
-//	return this->Score;
-//}
 
 void Player::resetData() {
 	if (isJumping) {
