@@ -21,20 +21,20 @@ void Player::run() {
 	Vector<SpriteFrame*> frameVec;
 
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* ç”¨æ¯ä¸€å¼ å›¾ç‰‡åˆ›å»ºSpriteFrameå¯¹è±¡ */
+		/* ÓÃÃ¿Ò»ÕÅÍ¼Æ¬´´½¨SpriteFrame¶ÔÏó */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
 	;
-	//* æ ¹æ®ç²¾çµå¸§å¯¹è±¡åˆ›å»ºåŠ¨ç”»å¯¹è±¡ */
+	//* ¸ù¾İ¾«ÁéÖ¡¶ÔÏó´´½¨¶¯»­¶ÔÏó */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
-	animation->setLoops(-1);    // å¾ªç¯æ’­æ”¾
-	animation->setDelayPerUnit(0.04f);  // æ¯å¸§æ’­æ”¾é—´éš”
+	animation->setLoops(-1);    // Ñ­»·²¥·Å
+	animation->setDelayPerUnit(0.04f);  // Ã¿Ö¡²¥·Å¼ä¸ô
 
-	/* åˆ›å»ºåŠ¨ç”»åŠ¨ä½œ */
+	/* ´´½¨¶¯»­¶¯×÷ */
 	Animate* animate = Animate::create(animation);
 
-	/* ç²¾çµæ‰§è¡ŒåŠ¨ä½œ */
+	/* ¾«ÁéÖ´ĞĞ¶¯×÷ */
 	m_sprite->runAction(animate);
 }
 
@@ -44,39 +44,39 @@ void Player::setViewPointByPlayer() {
 	}
 	Layer* parent = (Layer*)getParent();
 
-	/* åœ°å›¾æ–¹å—æ•°é‡ */
+	/* µØÍ¼·½¿éÊıÁ¿ */
 	Size mapTiledNum = m_map->getMapSize();
 
-	/* åœ°å›¾å•ä¸ªæ ¼å­å¤§å° */
+	/* µØÍ¼µ¥¸ö¸ñ×Ó´óĞ¡ */
 	Size tiledSize = m_map->getTileSize();
 
-	/*åœ°å›¾å¤§å° */
+	/*µØÍ¼´óĞ¡ */
 	Size mapSize = Size(
 		mapTiledNum.width * tiledSize.width,
 		mapTiledNum.height * tiledSize.height);
 
-	/* å±å¹•å¤§å° */
+	/* ÆÁÄ»´óĞ¡ */
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	/* ä¸»è§’åæ ‡ */
+	/* Ö÷½Ç×ø±ê */
 	Point spritePos = getPosition();
 
-	/* å¦‚æœä¸»è§’åæ ‡å°äºå±å¹•çš„ä¸€åŠï¼Œåˆ™å–å±å¹•ä¸­ç‚¹åæ ‡ï¼Œå¦åˆ™å–ä¸»è§’çš„åæ ‡ */
+	/* Èç¹ûÖ÷½Ç×ø±êĞ¡ÓÚÆÁÄ»µÄÒ»°ë£¬ÔòÈ¡ÆÁÄ»ÖĞµã×ø±ê£¬·ñÔòÈ¡Ö÷½ÇµÄ×ø±ê */
 	float x = std::max(spritePos.x, visibleSize.width / 2);
 	float y = std::max(spritePos.y, visibleSize.height / 2);
 
-	/* å¦‚æœXã€Yçš„åæ ‡å¤§äºå³ä¸Šè§’çš„æé™å€¼ï¼Œåˆ™å–æé™å€¼çš„åæ ‡ï¼ˆæé™å€¼æ˜¯æŒ‡ä¸è®©åœ°å›¾è¶…å‡º
-	å±å¹•é€ æˆå‡ºç°é»‘è¾¹çš„æé™åæ ‡ï¼‰ */
+	/* Èç¹ûX¡¢YµÄ×ø±ê´óÓÚÓÒÉÏ½ÇµÄ¼«ÏŞÖµ£¬ÔòÈ¡¼«ÏŞÖµµÄ×ø±ê£¨¼«ÏŞÖµÊÇÖ¸²»ÈÃµØÍ¼³¬³ö
+	ÆÁÄ»Ôì³É³öÏÖºÚ±ßµÄ¼«ÏŞ×ø±ê£© */
 	x = std::min(x, mapSize.width - visibleSize.width / 2);
 	y = std::min(y, mapSize.height - visibleSize.height / 2);
 
-	/* ç›®æ ‡ç‚¹ */
+	/* Ä¿±êµã */
 	Point destPos = Point(x, y);
 
-	/* å±å¹•ä¸­ç‚¹ */
+	/* ÆÁÄ»ÖĞµã */
 	Point centerPos = Point(visibleSize.width / 2, visibleSize.height / 2);
 
-	/* è®¡ç®—å±å¹•ä¸­ç‚¹å’Œæ‰€è¦ç§»åŠ¨çš„ç›®çš„ç‚¹ä¹‹é—´çš„è·ç¦» */
+	/* ¼ÆËãÆÁÄ»ÖĞµãºÍËùÒªÒÆ¶¯µÄÄ¿µÄµãÖ®¼äµÄ¾àÀë */
 	Point viewPos = centerPos - destPos;
 
 	parent->setPosition(viewPos);
@@ -97,11 +97,11 @@ void Player::doOperationCollidable(){
 
 	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
 	CallFunc* callfunc = CallFunc::create([&](){
-		/* æ¢å¤çŠ¶æ€ */
+		/* »Ö¸´×´Ì¬ */
 		rollBack();
 	});
 
-	/* æ‰§è¡ŒåŠ¨ä½œï¼Œç¢°æ’åˆ°éšœç¢ç‰©æ—¶çš„åå¼¹æ•ˆæœ */
+	/* Ö´ĞĞ¶¯×÷£¬Åö×²µ½ÕÏ°­ÎïÊ±µÄ·´µ¯Ğ§¹û */
 	auto actions = Sequence::create(jumpBy, callfunc, NULL);
 	this->runAction(actions);
 	FlowWord* flowWord = FlowWord::create();
@@ -110,8 +110,8 @@ void Player::doOperationCollidable(){
 
 	//Score = 0;
 
-	//stopAllActions();	/* å…ˆåœæ­¢æ‰€æœ‰æ­£åœ¨æ‰§è¡Œçš„åŠ¨ä½œ */
-	//resetData();		/* é‡ç½®æ•°æ® */
+	//stopAllActions();	/* ÏÈÍ£Ö¹ËùÓĞÕıÔÚÖ´ĞĞµÄ¶¯×÷ */
+	//resetData();		/* ÖØÖÃÊı¾İ */
 	//TMXLayer* barrier = m_map->getLayer("barrier");
 	//barrier->removeTileAt(tiledPos);
 	//removeChild(this, true);
@@ -119,36 +119,36 @@ void Player::doOperationCollidable(){
 }
 
 void Player::doOperationfood(Point tiledPos){
-	/* ä»éšœç¢ç‰©å±‚æ¸…é™¤å½“å‰æ ¼å­çš„ç‰©ä½“ */
+	/* ´ÓÕÏ°­Îï²ãÇå³ıµ±Ç°¸ñ×ÓµÄÎïÌå */
 	TMXLayer* barrier = m_map->getLayer("barrier");
 	barrier->removeTileAt(tiledPos);
 	Score += 1;
 }
 void Player::doOperationwin(){
-	/* å–å¾—æ ¼å­çš„winå±æ€§å€¼ï¼Œåˆ¤æ–­æ˜¯å¦ä¸ºtrueï¼Œå¦‚æœæ˜¯ï¼Œåˆ™æ¸¸æˆèƒœåˆ©ï¼Œè·³è½¬åˆ°èƒœåˆ©åœºæ™¯ */
+	/* È¡µÃ¸ñ×ÓµÄwinÊôĞÔÖµ£¬ÅĞ¶ÏÊÇ·ñÎªtrue£¬Èç¹ûÊÇ£¬ÔòÓÎÏ·Ê¤Àû£¬Ìø×ªµ½Ê¤Àû³¡¾° */
 	Director::getInstance()->replaceScene(WinScene::createScene());
 }
 
 void Player::setTagPosition(int x, int y) {
-	/* -----------------åˆ¤æ–­å‰é¢æ˜¯å¦ä¸å¯é€šè¡Œ---------------- */
-	/* å–ä¸»è§’å‰æ–¹çš„åæ ‡ */
+	/* -----------------ÅĞ¶ÏÇ°ÃæÊÇ·ñ²»¿ÉÍ¨ĞĞ---------------- */
+	/* È¡Ö÷½ÇÇ°·½µÄ×ø±ê */
 	Size spriteSize = m_sprite->getContentSize();
 	Point dstPos = Point(x + spriteSize.width / 2, y);
 
-	/*å¯¹æ¯å¸§éƒ½å®ä¾‹åŒ–ä¸€ä¸ªå›æ»šç±»å¯¹è±¡ï¼Œç”¨äºå­˜å‚¨çŠ¶æ€*/
+	/*¶ÔÃ¿Ö¡¶¼ÊµÀı»¯Ò»¸ö»Ø¹öÀà¶ÔÏó£¬ÓÃÓÚ´æ´¢×´Ì¬*/
 	data[frameCount] = new rollBackData(Point(x, y), Score);
 	frameCount++;
 
-	/* è·å¾—å½“å‰ä¸»è§’å‰æ–¹åæ ‡åœ¨åœ°å›¾ä¸­çš„æ ¼å­ä½ç½® */
+	/* »ñµÃµ±Ç°Ö÷½ÇÇ°·½×ø±êÔÚµØÍ¼ÖĞµÄ¸ñ×ÓÎ»ÖÃ */
 	Point tiledPos = tileCoordForPosition(Point(dstPos.x, dstPos.y));
-	/* è·å–åœ°å›¾æ ¼å­çš„å”¯ä¸€æ ‡è¯† */
+	/* »ñÈ¡µØÍ¼¸ñ×ÓµÄÎ¨Ò»±êÊ¶ */
 	int tiledGid = meta->getTileGIDAt(tiledPos);
-	/* ä¸ä¸º0ï¼Œä»£è¡¨å­˜åœ¨è¿™ä¸ªæ ¼å­ */
+	/* ²»Îª0£¬´ú±í´æÔÚÕâ¸ö¸ñ×Ó */
 	if (tiledGid != 0) {
 		/*
-		è·å–è¯¥åœ°å›¾æ ¼å­çš„æ‰€æœ‰å±æ€§ï¼Œç›®å‰æˆ‘ä»¬åªæœ‰ä¸€ä¸ªCollidableå±æ€§
-		æ ¼å­æ˜¯å±äºmetaå±‚çš„ï¼Œä½†åŒæ—¶ä¹Ÿæ˜¯å±äºæ•´ä¸ªåœ°å›¾çš„ï¼Œæ‰€ä»¥åœ¨è·å–æ ¼å­çš„æ‰€æœ‰å±æ€§
-		æ—¶ï¼Œé€šè¿‡æ ¼å­å”¯ä¸€æ ‡è¯†åœ¨åœ°å›¾ä¸­å–å¾—
+		»ñÈ¡¸ÃµØÍ¼¸ñ×ÓµÄËùÓĞÊôĞÔ£¬Ä¿Ç°ÎÒÃÇÖ»ÓĞÒ»¸öCollidableÊôĞÔ
+		¸ñ×ÓÊÇÊôÓÚmeta²ãµÄ£¬µ«Í¬Ê±Ò²ÊÇÊôÓÚÕû¸öµØÍ¼µÄ£¬ËùÒÔÔÚ»ñÈ¡¸ñ×ÓµÄËùÓĞÊôĞÔ
+		Ê±£¬Í¨¹ı¸ñ×ÓÎ¨Ò»±êÊ¶ÔÚµØÍ¼ÖĞÈ¡µÃ
 		*/
 
 		Value properties = m_map->getPropertiesForGID(tiledGid);
@@ -158,7 +158,7 @@ void Player::setTagPosition(int x, int y) {
 
 	Entity::setTagPosition(x, y);
 
-	/* ä»¥ä¸»è§’ä¸ºä¸­å¿ƒç§»åŠ¨åœ°å›¾ */
+	/* ÒÔÖ÷½ÇÎªÖĞĞÄÒÆ¶¯µØÍ¼ */
 	setViewPointByPlayer();
 }
 
@@ -175,10 +175,10 @@ Point Player::tileCoordForPosition(Point pos) {
 
 	int x = pos.x / tiledSize.width;
 
-	/* Cocos2d-xçš„é»˜è®¤Yåæ ‡æ˜¯ç”±ä¸‹è‡³ä¸Šçš„ï¼Œæ‰€ä»¥è¦åšä¸€ä¸ªç›¸å‡æ“ä½œ */
+	/* Cocos2d-xµÄÄ¬ÈÏY×ø±êÊÇÓÉÏÂÖÁÉÏµÄ£¬ËùÒÔÒª×öÒ»¸öÏà¼õ²Ù×÷ */
 	int y = (700 - pos.y) / tiledSize.height;
 
-	/* æ ¼å­åæ ‡ä»é›¶å¼€å§‹è®¡ç®— */
+	/* ¸ñ×Ó×ø±ê´ÓÁã¿ªÊ¼¼ÆËã */
 	if (x > 0) {
 		x -= 1;
 	}
@@ -190,18 +190,44 @@ Point Player::tileCoordForPosition(Point pos) {
 }
 
 void Player::rollBack(){
-	/*å›é€€åˆ°ä¸¤ç§’ä»¥å‰çš„çŠ¶æ€*/
+	/*»ØÍËµ½Á½ÃëÒÔÇ°µÄ×´Ì¬*/
 	int t = frameCount - 60 * 2;
-
-	/*å¦‚æœè·ç¦»æ¸¸æˆå¼€å§‹ä¸åˆ°ä¸¤ç§’ï¼Œåˆ™å›é€€åˆ°0ç§’çš„çŠ¶æ€*/
+	Size mapTiledNum = m_map->getMapSize();
+	Size tiledSize = m_map->getTileSize();
+	Size mapSize = Size(
+		mapTiledNum.width * tiledSize.width,
+		mapTiledNum.height * tiledSize.height);
+	/*Èç¹û¾àÀëÓÎÏ·¿ªÊ¼²»µ½Á½Ãë£¬Ôò»ØÍËµ½0ÃëµÄ×´Ì¬*/
 	if (t < 0)
 		t = 0;
 
-	/*å¦‚æœè¿˜æœ‰ä¸€æ¬¡æœºä¼šï¼Œåˆ™å›é€€*/
+	/*Èç¹û»¹ÓĞÒ»´Î»ú»á£¬Ôò»ØÍË*/
 	if (chance != 0)
 	{
 		Score = data[t]->getScore();
-		Entity::setTagPosition(data[t]->getPointx(), data[t]->getPointy());
+		//Entity::setTagPosition(data[t]->getPointx(), data[t]->getPointy());
+		switch (Score % 6)
+		{
+		case 1:
+			if (data[frameCount - 1]->getPointx() * 2 <= mapSize.width){
+				Entity::setTagPosition(data[frameCount - 1]->getPointx() * 2, data[frameCount - 1]->getPointy());
+			}
+			else {
+				Entity::setTagPosition(mapSize.width - 3 * tiledSize.width, data[frameCount - 1]->getPointy());
+			}
+			break;
+		case 2:
+			Entity::setTagPosition(data[frameCount - 1]->getPointx() / 2, data[frameCount - 1]->getPointy());
+			break;
+		case 4:
+			Entity::setTagPosition(mapSize.width - 3 * tiledSize.width, data[frameCount - 1]->getPointy());
+			break;
+		case 5:
+			Entity::setTagPosition(0, data[frameCount - 1]->getPointy());
+			break;
+		default:
+			break;
+		}
 		randomEvent();
 	}
 	chance--;
@@ -212,16 +238,16 @@ void Player::isOver()
 {
 	if (chance == 0)
 	{
-		/*æœºä¼šç”¨å®Œåˆ™å±•ç¤ºå¤±è´¥åœºæ™¯*/
+		/*»ú»áÓÃÍêÔòÕ¹Ê¾Ê§°Ü³¡¾°*/
 		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene()));
 
-		/*é‡ç½®ç›¸å…³æ•°æ®*/
+		/*ÖØÖÃÏà¹ØÊı¾İ*/
 		memset(data, 0, sizeof(data));
 		frameCount = 0;
 		Score = 0;
 	}
 	else if (chance < 0)
-		/*ç‚¹å‡»try againåæ¢å¤æœºä¼šæ•°*/
+		/*µã»÷try againºó»Ö¸´»ú»áÊı*/
 		chance = 1;
 }
 
@@ -241,7 +267,7 @@ public:
 	virtual void doOperation(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord) {
 	}
 };
-class Operation0 : public Strategy{
+class Operation0 : public Strategy, public Player{
 	void doOperation(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableOne();
 		Score = collidables->change(Score);
@@ -253,13 +279,6 @@ class Operation0 : public Strategy{
 class Operation1 : public Strategy{
 	void doOperation(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableTwo();
-		if (data[frameCount - 1]->getPointx() * 2 <= mapSize.width){
-			Entity::setTagPosition(data[frameCount - 1]->getPointx(), data[frameCount - 1]->getPointy());
-		}
-		else {
-			Entity::setTagPosition(mapSize.width - 3 * tiledSize.width, data[frameCount - 1]->getPointy());
-		}
-
 		string t = collidables->getInfo().c_str();
 		const char* tmp = t.c_str();
 		flowWord->showWord(tmp, m_sprite->getPosition());
@@ -268,7 +287,6 @@ class Operation1 : public Strategy{
 class Operation2 : public Strategy{
 	void doOperation(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableThree();
-		Entity::setTagPosition(data[frameCount - 1]->getPointx() / 2, data[frameCount - 1]->getPointy());
 		string t = collidables->getInfo().c_str();
 		const char* tmp = t.c_str();
 		flowWord->showWord(tmp, m_sprite->getPosition());
@@ -288,7 +306,6 @@ class Operation4 : public Strategy{
 	void doOperation(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableTwo();
 		collidables = new Collidable2(collidables);
-		Entity::setTagPosition(mapSize.width - 3 * tiledSize.width, data[frameCount - 1]->getPointy());
 		string t = collidables->getInfo().c_str();
 		const char* tmp = t.c_str();
 		flowWord->showWord(tmp, m_sprite->getPosition());
@@ -298,7 +315,6 @@ class Operation5 : public Strategy{
 	void doOperation(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableThree();
 		collidables = new Collidable3(collidables);
-		Entity::setTagPosition(0, data[frameCount - 1]->getPointy());
 		string t = collidables->getInfo().c_str();
 		const char* tmp = t.c_str();
 		flowWord->showWord(tmp, m_sprite->getPosition());
@@ -309,7 +325,7 @@ class Context : public Strategy
 {
 public:
 	Context(int Score, Size mapSize, Size tiledSize, Sprite* m_sprite, FlowWord* flowWord){
-		
+
 		Operation0 *op0 = new Operation0();
 		Operation1 *op1 = new Operation1();
 		Operation2 *op2 = new Operation2();
@@ -358,7 +374,7 @@ void Player::randomEvent()
 		mapTiledNum.height * tiledSize.height);
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
-	/*æ ¹æ®å½“å‰åˆ†æ•°å¯¹6æ±‚æ¨¡è·å–ç›¸åº”ç¢°æ’äº‹ä»¶*/
+	/*¸ù¾İµ±Ç°·ÖÊı¶Ô6ÇóÄ£»ñÈ¡ÏàÓ¦Åö×²ÊÂ¼ş*/
 
 	Context context(Score, mapSize, tiledSize, m_sprite, flowWord);
 

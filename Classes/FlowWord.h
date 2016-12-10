@@ -1,9 +1,3 @@
-/*
-    文件名：    FlowWord.h
-    描　述：    文字飘动效果
-    创建人：    笨木头_钟迪龙 (博客：http://www.benmutou.com)
-*/
-
 #ifndef _FlowWord_H_
 #define _FlowWord_H_
 

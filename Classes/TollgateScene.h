@@ -11,6 +11,5 @@ public:
 	virtual bool init();
 	void addPlayer(TMXTiledMap* map);
 	virtual void update(float);
-
 };
 #endif
