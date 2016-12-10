@@ -41,4 +41,28 @@ private:
 	Point point;
 	int score;
 };
+class Mapsize
+{
+private:
+	int width;
+	int height;
+	Mapsize(){};
+	Mapsize(int w, int h)   //构造函数是私有的  
+	{
+		width = w;
+		height = h;
+	}
+	static Mapsize* instance;
+	virtual ~Mapsize(void){}
+public:
+	int getWidth(){ return width; }
+	int getHeight(){ return height; }
+	static Mapsize *GetInstance(){
+		static Mapsize *instance;
+		if (NULL == instance){
+			instance = new Mapsize(21000,700);
+		}
+		return instance;
+	}
+};
 #endif
