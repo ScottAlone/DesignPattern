@@ -2,9 +2,11 @@
 #include "Tollgatescene.h"
 #include "HelpScene.h"
 #include "SimpleAudioEngine.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
+SceneManager *scene;
 Scene* HelloWorld::createScene()
 {
     auto scene = Scene::create();
@@ -61,12 +63,12 @@ bool HelloWorld::init()
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, TollgateScene::createScene()));
+	scene->tollgateScene();
 }
 
 void HelloWorld::menuCloseCallback1(Ref* pSender)
 {
-	Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, HelpScene::createScene()));
+	scene->helpScene();
 }
 cocos2d::Animate* HelloWorld::createAnimate1()
 {
@@ -74,19 +76,19 @@ cocos2d::Animate* HelloWorld::createAnimate1()
 	SpriteFrame* frame = NULL;
 	Vector<SpriteFrame*> frameVec;
 
-	/* 用一个列表保存所有SpriteFrame对象 */
+	/* 脫脙脪禄赂枚脕脨卤铆卤拢麓忙脣霉脫脨SpriteFrame露脭脧贸 */
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* 用每一张图片创建SpriteFrame对象 */
+		/* 脫脙脙驴脪禄脮脜脥录脝卢麓麓陆篓SpriteFrame露脭脧贸 */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
 
-	/* 使用SpriteFrame列表创建动画对象 */
+	/* 脢鹿脫脙SpriteFrame脕脨卤铆麓麓陆篓露炉禄颅露脭脧贸 */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
 	animation->setLoops(-1);
 	animation->setDelayPerUnit(0.1f);
 
-	/* 将动画包装成一个动作 */
+	/* 陆芦露炉禄颅掳眉脳掳鲁脡脪禄赂枚露炉脳梅 */
 	Animate* action = Animate::create(animation);
 
 	return action;
