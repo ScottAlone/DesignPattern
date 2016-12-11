@@ -6,6 +6,7 @@
 #include "LoseScene.h"
 #include "Collidables.h"
 #include "Observer.h"
+#include "SceneManager.h"
 
 rollBackData *data[10000];
 int frameCount = 0;
@@ -13,7 +14,7 @@ int chance = 3;
 int Player::Score = 0;
 HP *myHp = new MyHp();
 Mapsize *p1 = Mapsize::GetInstance();
-
+SceneManager *myScene;
 bool Player::init() {
 	Observer *observer1 = new ObserverHp(myHp);
 	myHp->Attach(observer1);
@@ -29,20 +30,20 @@ void Player::run() {
 	Vector<SpriteFrame*> frameVec;
 
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* 用每一张图片创建SpriteFrame对象 */
+		/* 脫脙脙驴脪禄脮脜脥录脝卢麓麓陆篓SpriteFrame露脭脧贸 */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
 	;
-	//* 根据精灵帧对象创建动画对象 */
+	//* 赂霉戮脻戮芦脕茅脰隆露脭脧贸麓麓陆篓露炉禄颅露脭脧贸 */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
-	animation->setLoops(-1);    // 循环播放
-	animation->setDelayPerUnit(0.04f);  // 每帧播放间隔
+	animation->setLoops(-1);    // 脩颅禄路虏楼路脜
+	animation->setDelayPerUnit(0.04f);  // 脙驴脰隆虏楼路脜录盲赂么
 
-	/* 创建动画动作 */
+	/* 麓麓陆篓露炉禄颅露炉脳梅 */
 	Animate* animate = Animate::create(animation);
 
-	/* 精灵执行动作 */
+	/* 戮芦脕茅脰麓脨脨露炉脳梅 */
 	m_sprite->runAction(animate);
 }
 
@@ -52,28 +53,28 @@ void Player::setViewPointByPlayer() {
 	}
 	Layer* parent = (Layer*)getParent();
 
-	/* 屏幕大小 */
+	/* 脝脕脛禄麓贸脨隆 */
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	/* 主角坐标 */
+	/* 脰梅陆脟脳酶卤锚 */
 	Point spritePos = getPosition();
 
-	/* 如果主角坐标小于屏幕的一半，则取屏幕中点坐标，否则取主角的坐标 */
+	/* 脠莽鹿没脰梅陆脟脳酶卤锚脨隆脫脷脝脕脛禄碌脛脪禄掳毛拢卢脭貌脠隆脝脕脛禄脰脨碌茫脳酶卤锚拢卢路帽脭貌脠隆脰梅陆脟碌脛脳酶卤锚 */
 	float x = std::max(spritePos.x, visibleSize.width / 2);
 	float y = std::max(spritePos.y, visibleSize.height / 2);
 
-	/* 如果X、Y的坐标大于右上角的极限值，则取极限值的坐标（极限值是指不让地图超出
-	屏幕造成出现黑边的极限坐标） */
+	/* 脠莽鹿没X隆垄Y碌脛脳酶卤锚麓贸脫脷脫脪脡脧陆脟碌脛录芦脧脼脰碌拢卢脭貌脠隆录芦脧脼脰碌碌脛脳酶卤锚拢篓录芦脧脼脰碌脢脟脰赂虏禄脠脙碌脴脥录鲁卢鲁枚
+	脝脕脛禄脭矛鲁脡鲁枚脧脰潞脷卤脽碌脛录芦脧脼脳酶卤锚拢漏 */
 	x = std::min(x, p1->getWidth() - visibleSize.width / 2);
 	y = std::min(y, p1->getHeight() - visibleSize.height / 2);
 
-	/* 目标点 */
+	/* 脛驴卤锚碌茫 */
 	Point destPos = Point(x, y);
 
-	/* 屏幕中点 */
+	/* 脝脕脛禄脰脨碌茫 */
 	Point centerPos = Point(visibleSize.width / 2, visibleSize.height / 2);
 
-	/* 计算屏幕中点和所要移动的目的点之间的距离 */
+	/* 录脝脣茫脝脕脛禄脰脨碌茫潞脥脣霉脪陋脪脝露炉碌脛脛驴碌脛碌茫脰庐录盲碌脛戮脿脌毛 */
 	Point viewPos = centerPos - destPos;
 
 	parent->setPosition(viewPos);
@@ -99,11 +100,11 @@ void Player::doOperationCollidable(){
 	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
 	isOver();
 	CallFunc* callfunc = CallFunc::create([&](){
-		/* 恢复状态 */
+		/* 禄脰赂麓脳麓脤卢 */
 		rollBack();
 	});
 
-	/* 执行动作，碰撞到障碍物时的反弹效果 */
+	/* 脰麓脨脨露炉脳梅拢卢脜枚脳虏碌陆脮脧掳颅脦茂脢卤碌脛路麓碌炉脨搂鹿没 */
 	auto actions = Sequence::create(jumpBy, callfunc, NULL);
 	this->runAction(actions);
 	FlowWord* flowWord = FlowWord::create();
@@ -112,40 +113,40 @@ void Player::doOperationCollidable(){
 }
 
 void Player::doOperationfood(Point tiledPos){
-	/* 从障碍物层清除当前格子的物体 */
+	/* 麓脫脮脧掳颅脦茂虏茫脟氓鲁媒碌卤脟掳赂帽脳脫碌脛脦茂脤氓 */
 	TMXLayer* barrier = m_map->getLayer("barrier");
 	barrier->removeTileAt(tiledPos);
 	Score += 1;
 }
 void Player::doOperationwin(){
-	/* 取得格子的win属性值，判断是否为true，如果是，则游戏胜利，跳转到胜利场景 */
+	/* 脠隆碌脙赂帽脳脫碌脛win脢么脨脭脰碌拢卢脜脨露脧脢脟路帽脦陋true拢卢脠莽鹿没脢脟拢卢脭貌脫脦脧路脢陇脌没拢卢脤酶脳陋碌陆脢陇脌没鲁隆戮掳 */
 	Score = 0;
 	chance = 3;
 	myHp->InitStatus(100);
 	myHp->Notify();
-	Director::getInstance()->replaceScene(WinScene::createScene());
+	myScene->winScene();
 }
 
 void Player::setTagPosition(int x, int y) {
-	/* -----------------判断前面是否不可通行---------------- */
-	/* 取主角前方的坐标 */
+	/* -----------------脜脨露脧脟掳脙忙脢脟路帽虏禄驴脡脥篓脨脨---------------- */
+	/* 脠隆脰梅陆脟脟掳路陆碌脛脳酶卤锚 */
 	Size spriteSize = m_sprite->getContentSize();
 	Point dstPos = Point(x + spriteSize.width / 2, y);
 
-	/*对每帧都实例化一个回滚类对象，用于存储状态*/
+	/*露脭脙驴脰隆露录脢碌脌媒禄炉脪禄赂枚禄脴鹿枚脌脿露脭脧贸拢卢脫脙脫脷麓忙麓垄脳麓脤卢*/
 	data[frameCount] = new rollBackData(Point(x, y), Score);
 	frameCount++;
 
-	/* 获得当前主角前方坐标在地图中的格子位置 */
+	/* 禄帽碌脙碌卤脟掳脰梅陆脟脟掳路陆脳酶卤锚脭脷碌脴脥录脰脨碌脛赂帽脳脫脦禄脰脙 */
 	Point tiledPos = tileCoordForPosition(Point(dstPos.x, dstPos.y));
-	/* 获取地图格子的唯一标识 */
+	/* 禄帽脠隆碌脴脥录赂帽脳脫碌脛脦篓脪禄卤锚脢露 */
 	int tiledGid = meta->getTileGIDAt(tiledPos);
-	/* 不为0，代表存在这个格子 */
+	/* 虏禄脦陋0拢卢麓煤卤铆麓忙脭脷脮芒赂枚赂帽脳脫 */
 	if (tiledGid != 0) {
 		/*
-		获取该地图格子的所有属性，目前我们只有一个Collidable属性
-		格子是属于meta层的，但同时也是属于整个地图的，所以在获取格子的所有属性
-		时，通过格子唯一标识在地图中取得
+		禄帽脠隆赂脙碌脴脥录赂帽脳脫碌脛脣霉脫脨脢么脨脭拢卢脛驴脟掳脦脪脙脟脰禄脫脨脪禄赂枚Collidable脢么脨脭
+		赂帽脳脫脢脟脢么脫脷meta虏茫碌脛拢卢碌芦脥卢脢卤脪虏脢脟脢么脫脷脮没赂枚碌脴脥录碌脛拢卢脣霉脪脭脭脷禄帽脠隆赂帽脳脫碌脛脣霉脫脨脢么脨脭
+		脢卤拢卢脥篓鹿媒赂帽脳脫脦篓脪禄卤锚脢露脭脷碌脴脥录脰脨脠隆碌脙
 		*/
 
 		Value properties = m_map->getPropertiesForGID(tiledGid);
@@ -155,7 +156,7 @@ void Player::setTagPosition(int x, int y) {
 
 	Entity::setTagPosition(x, y);
 
-	/* 以主角为中心移动地图 */
+	/* 脪脭脰梅陆脟脦陋脰脨脨脛脪脝露炉碌脴脥录 */
 	setViewPointByPlayer();
 }
 
@@ -172,10 +173,10 @@ Point Player::tileCoordForPosition(Point pos) {
 
 	int x = pos.x / tiledSize.width;
 
-	/* Cocos2d-x的默认Y坐标是由下至上的，所以要做一个相减操作 */
+	/* Cocos2d-x碌脛脛卢脠脧Y脳酶卤锚脢脟脫脡脧脗脰脕脡脧碌脛拢卢脣霉脪脭脪陋脳枚脪禄赂枚脧脿录玫虏脵脳梅 */
 	int y = (700 - pos.y) / tiledSize.height;
 
-	/* 格子坐标从零开始计算 */
+	/* 赂帽脳脫脳酶卤锚麓脫脕茫驴陋脢录录脝脣茫 */
 	if (x > 0) {
 		x -= 1;
 	}
@@ -187,13 +188,13 @@ Point Player::tileCoordForPosition(Point pos) {
 }
 
 void Player::rollBack(){
-	/*回退到两秒以前的状态*/
+	/*禄脴脥脣碌陆脕陆脙毛脪脭脟掳碌脛脳麓脤卢*/
 	int t = frameCount - 60 * 2;
-	/*如果距离游戏开始不到两秒，则回退到0秒的状态*/
+	/*脠莽鹿没戮脿脌毛脫脦脧路驴陋脢录虏禄碌陆脕陆脙毛拢卢脭貌禄脴脥脣碌陆0脙毛碌脛脳麓脤卢*/
 	if (t < 0)
 		t = 0;
 
-	/*如果还有机会或血，则回退*/
+	/*脠莽鹿没禄鹿脫脨禄煤禄谩禄貌脩陋拢卢脭貌禄脴脥脣*/
 	if (chance > 0 && myHp->GetStatus() > 0)
 	{
 		Score = data[t]->getScore();
@@ -244,10 +245,10 @@ void Player::isOver()
 {
 	if (chance == 0 || myHp->GetStatus() <= 0)
 	{
-		/*机会用完则展示失败场景*/
-		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene()));
+		/*禄煤禄谩脫脙脥锚脭貌脮鹿脢戮脢搂掳脺鲁隆戮掳*/
+		myScene->loseScene();
 
-		/*重置相关数据*/
+		/*脰脴脰脙脧脿鹿脴脢媒戮脻*/
 		memset(data, 0, sizeof(data));
 		frameCount = 0;
 		Score = 0;
@@ -255,7 +256,7 @@ void Player::isOver()
 		myHp->Notify();
 	}
 	else if (chance < 0){
-		/*点击try again后恢复机会数*/
+		/*碌茫禄梅try again潞贸禄脰赂麓禄煤禄谩脢媒*/
 		chance = 3;
 		myHp->InitStatus(100);
 		myHp->Notify();
@@ -376,7 +377,7 @@ void Player::randomEvent()
 {
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
-	/*根据当前分数对6求模获取相应碰撞事件*/
+	/*赂霉戮脻碌卤脟掳路脰脢媒露脭6脟贸脛拢禄帽脠隆脧脿脫娄脜枚脳虏脢脗录镁*/
 
 	Context context(Score, m_sprite, flowWord);
 
