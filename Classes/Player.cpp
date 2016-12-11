@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include "WinScene.h"
 #include "FlowWord.h"
 #include "TollgateScene.h"
@@ -30,20 +30,14 @@ void Player::run() {
 	Vector<SpriteFrame*> frameVec;
 
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* ÓÃÃ¿Ò»ÕÅÍ¼Æ¬´´½¨SpriteFrame¶ÔÏó */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
-	;
-	//* ¸ù¾Ý¾«ÁéÖ¡¶ÔÏó´´½¨¶¯»­¶ÔÏó */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
-	animation->setLoops(-1);    // Ñ­»·²¥·Å
-	animation->setDelayPerUnit(0.04f);  // Ã¿Ö¡²¥·Å¼ä¸ô
-
-	/* ´´½¨¶¯»­¶¯×÷ */
+	animation->setLoops(-1);
+	animation->setDelayPerUnit(0.04f);  
 	Animate* animate = Animate::create(animation);
 
-	/* ¾«ÁéÖ´ÐÐ¶¯×÷ */
 	m_sprite->runAction(animate);
 }
 
@@ -53,28 +47,18 @@ void Player::setViewPointByPlayer() {
 	}
 	Layer* parent = (Layer*)getParent();
 
-	/* ÆÁÄ»´óÐ¡ */
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	/* Ö÷½Ç×ø±ê */
 	Point spritePos = getPosition();
 
-	/* Èç¹ûÖ÷½Ç×ø±êÐ¡ÓÚÆÁÄ»µÄÒ»°ë£¬ÔòÈ¡ÆÁÄ»ÖÐµã×ø±ê£¬·ñÔòÈ¡Ö÷½ÇµÄ×ø±ê */
 	float x = std::max(spritePos.x, visibleSize.width / 2);
 	float y = std::max(spritePos.y, visibleSize.height / 2);
 
-	/* Èç¹ûX¡¢YµÄ×ø±ê´óÓÚÓÒÉÏ½ÇµÄ¼«ÏÞÖµ£¬ÔòÈ¡¼«ÏÞÖµµÄ×ø±ê£¨¼«ÏÞÖµÊÇÖ¸²»ÈÃµØÍ¼³¬³ö
-	ÆÁÄ»Ôì³É³öÏÖºÚ±ßµÄ¼«ÏÞ×ø±ê£© */
 	x = std::min(x, p1->getWidth() - visibleSize.width / 2);
 	y = std::min(y, p1->getHeight() - visibleSize.height / 2);
 
-	/* Ä¿±êµã */
 	Point destPos = Point(x, y);
-
-	/* ÆÁÄ»ÖÐµã */
 	Point centerPos = Point(visibleSize.width / 2, visibleSize.height / 2);
-
-	/* ¼ÆËãÆÁÄ»ÖÐµãºÍËùÒªÒÆ¶¯µÄÄ¿µÄµãÖ®¼äµÄ¾àÀë */
 	Point viewPos = centerPos - destPos;
 
 	parent->setPosition(viewPos);
@@ -100,11 +84,9 @@ void Player::doOperationCollidable(){
 	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
 	isOver();
 	CallFunc* callfunc = CallFunc::create([&](){
-		/* »Ö¸´×´Ì¬ */
 		rollBack();
 	});
 
-	/* Ö´ÐÐ¶¯×÷£¬Åö×²µ½ÕÏ°­ÎïÊ±µÄ·´µ¯Ð§¹û */
 	auto actions = Sequence::create(jumpBy, callfunc, NULL);
 	this->runAction(actions);
 	FlowWord* flowWord = FlowWord::create();
@@ -113,13 +95,11 @@ void Player::doOperationCollidable(){
 }
 
 void Player::doOperationfood(Point tiledPos){
-	/* ´ÓÕÏ°­Îï²ãÇå³ýµ±Ç°¸ñ×ÓµÄÎïÌå */
 	TMXLayer* barrier = m_map->getLayer("barrier");
 	barrier->removeTileAt(tiledPos);
 	Score += 1;
 }
 void Player::doOperationwin(){
-	/* È¡µÃ¸ñ×ÓµÄwinÊôÐÔÖµ£¬ÅÐ¶ÏÊÇ·ñÎªtrue£¬Èç¹ûÊÇ£¬ÔòÓÎÏ·Ê¤Àû£¬Ìø×ªµ½Ê¤Àû³¡¾° */
 	Score = 0;
 	chance = 3;
 	myHp->InitStatus(100);
@@ -128,27 +108,15 @@ void Player::doOperationwin(){
 }
 
 void Player::setTagPosition(int x, int y) {
-	/* -----------------ÅÐ¶ÏÇ°ÃæÊÇ·ñ²»¿ÉÍ¨ÐÐ---------------- */
-	/* È¡Ö÷½ÇÇ°·½µÄ×ø±ê */
 	Size spriteSize = m_sprite->getContentSize();
 	Point dstPos = Point(x + spriteSize.width / 2, y);
 
-	/*¶ÔÃ¿Ö¡¶¼ÊµÀý»¯Ò»¸ö»Ø¹öÀà¶ÔÏó£¬ÓÃÓÚ´æ´¢×´Ì¬*/
 	data[frameCount] = new rollBackData(Point(x, y), Score);
 	frameCount++;
 
-	/* »ñµÃµ±Ç°Ö÷½ÇÇ°·½×ø±êÔÚµØÍ¼ÖÐµÄ¸ñ×ÓÎ»ÖÃ */
 	Point tiledPos = tileCoordForPosition(Point(dstPos.x, dstPos.y));
-	/* »ñÈ¡µØÍ¼¸ñ×ÓµÄÎ¨Ò»±êÊ¶ */
 	int tiledGid = meta->getTileGIDAt(tiledPos);
-	/* ²»Îª0£¬´ú±í´æÔÚÕâ¸ö¸ñ×Ó */
 	if (tiledGid != 0) {
-		/*
-		»ñÈ¡¸ÃµØÍ¼¸ñ×ÓµÄËùÓÐÊôÐÔ£¬Ä¿Ç°ÎÒÃÇÖ»ÓÐÒ»¸öCollidableÊôÐÔ
-		¸ñ×ÓÊÇÊôÓÚmeta²ãµÄ£¬µ«Í¬Ê±Ò²ÊÇÊôÓÚÕû¸öµØÍ¼µÄ£¬ËùÒÔÔÚ»ñÈ¡¸ñ×ÓµÄËùÓÐÊôÐÔ
-		Ê±£¬Í¨¹ý¸ñ×ÓÎ¨Ò»±êÊ¶ÔÚµØÍ¼ÖÐÈ¡µÃ
-		*/
-
 		Value properties = m_map->getPropertiesForGID(tiledGid);
 		ValueMap propertiesMap = properties.asValueMap();
 		context(propertiesMap, tiledPos);
@@ -156,7 +124,6 @@ void Player::setTagPosition(int x, int y) {
 
 	Entity::setTagPosition(x, y);
 
-	/* ÒÔÖ÷½ÇÎªÖÐÐÄÒÆ¶¯µØÍ¼ */
 	setViewPointByPlayer();
 }
 
@@ -173,10 +140,8 @@ Point Player::tileCoordForPosition(Point pos) {
 
 	int x = pos.x / tiledSize.width;
 
-	/* Cocos2d-xµÄÄ¬ÈÏY×ø±êÊÇÓÉÏÂÖÁÉÏµÄ£¬ËùÒÔÒª×öÒ»¸öÏà¼õ²Ù×÷ */
 	int y = (700 - pos.y) / tiledSize.height;
 
-	/* ¸ñ×Ó×ø±ê´ÓÁã¿ªÊ¼¼ÆËã */
 	if (x > 0) {
 		x -= 1;
 	}
@@ -188,13 +153,10 @@ Point Player::tileCoordForPosition(Point pos) {
 }
 
 void Player::rollBack(){
-	/*»ØÍËµ½Á½ÃëÒÔÇ°µÄ×´Ì¬*/
 	int t = frameCount - 60 * 2;
-	/*Èç¹û¾àÀëÓÎÏ·¿ªÊ¼²»µ½Á½Ãë£¬Ôò»ØÍËµ½0ÃëµÄ×´Ì¬*/
 	if (t < 0)
 		t = 0;
 
-	/*Èç¹û»¹ÓÐ»ú»á»òÑª£¬Ôò»ØÍË*/
 	if (chance > 0 && myHp->GetStatus() > 0)
 	{
 		Score = data[t]->getScore();
@@ -245,10 +207,8 @@ void Player::isOver()
 {
 	if (chance == 0 || myHp->GetStatus() <= 0)
 	{
-		/*»ú»áÓÃÍêÔòÕ¹Ê¾Ê§°Ü³¡¾°*/
 		myScene->loseScene();
 
-		/*ÖØÖÃÏà¹ØÊý¾Ý*/
 		memset(data, 0, sizeof(data));
 		frameCount = 0;
 		Score = 0;
@@ -256,7 +216,6 @@ void Player::isOver()
 		myHp->Notify();
 	}
 	else if (chance < 0){
-		/*µã»÷try againºó»Ö¸´»ú»áÊý*/
 		chance = 3;
 		myHp->InitStatus(100);
 		myHp->Notify();
@@ -377,7 +336,6 @@ void Player::randomEvent()
 {
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
-	/*¸ù¾Ýµ±Ç°·ÖÊý¶Ô6ÇóÄ£»ñÈ¡ÏàÓ¦Åö×²ÊÂ¼þ*/
 
 	Context context(Score, m_sprite, flowWord);
 

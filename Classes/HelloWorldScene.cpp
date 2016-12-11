@@ -76,19 +76,15 @@ cocos2d::Animate* HelloWorld::createAnimate1()
 	SpriteFrame* frame = NULL;
 	Vector<SpriteFrame*> frameVec;
 
-	/* ÓÃÒ»¸öÁÐ±í±£´æËùÓÐSpriteFrame¶ÔÏó */
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* ÓÃÃ¿Ò»ÕÅÍ¼Æ¬´´½¨SpriteFrame¶ÔÏó */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
 
-	/* Ê¹ÓÃSpriteFrameÁÐ±í´´½¨¶¯»­¶ÔÏó */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
 	animation->setLoops(-1);
 	animation->setDelayPerUnit(0.1f);
 
-	/* ½«¶¯»­°ü×°³ÉÒ»¸ö¶¯×÷ */
 	Animate* action = Animate::create(animation);
 
 	return action;
