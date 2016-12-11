@@ -30,14 +30,20 @@ void Player::run() {
 	Vector<SpriteFrame*> frameVec;
 
 	for (int i = 1; i <= iFrameNum; i++) {
+		/* 用每一张图片创建SpriteFrame对象 */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
+	;
+	//* 根据精灵帧对象创建动画对象 */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
-	animation->setLoops(-1);
-	animation->setDelayPerUnit(0.04f);  
+	animation->setLoops(-1);    // 循环播放
+	animation->setDelayPerUnit(0.04f);  // 每帧播放间隔
+
+	/* 创建动画动作 */
 	Animate* animate = Animate::create(animation);
 
+	/* 精灵执行动作 */
 	m_sprite->runAction(animate);
 }
 
@@ -47,18 +53,28 @@ void Player::setViewPointByPlayer() {
 	}
 	Layer* parent = (Layer*)getParent();
 
+	/* 屏幕大小 */
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	/* 主角坐标 */
 	Point spritePos = getPosition();
 
+	/* 如果主角坐标小于屏幕的一半，则取屏幕中点坐标，否则取主角的坐标 */
 	float x = std::max(spritePos.x, visibleSize.width / 2);
 	float y = std::max(spritePos.y, visibleSize.height / 2);
 
+	/* 如果X、Y的坐标大于右上角的极限值，则取极限值的坐标（极限值是指不让地图超出
+	屏幕造成出现黑边的极限坐标） */
 	x = std::min(x, p1->getWidth() - visibleSize.width / 2);
 	y = std::min(y, p1->getHeight() - visibleSize.height / 2);
 
+	/* 目标点 */
 	Point destPos = Point(x, y);
+
+	/* 屏幕中点 */
 	Point centerPos = Point(visibleSize.width / 2, visibleSize.height / 2);
+
+	/* 计算屏幕中点和所要移动的目的点之间的距离 */
 	Point viewPos = centerPos - destPos;
 
 	parent->setPosition(viewPos);
@@ -84,9 +100,11 @@ void Player::doOperationCollidable(){
 	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
 	isOver();
 	CallFunc* callfunc = CallFunc::create([&](){
+		/* 恢复状态 */
 		rollBack();
 	});
 
+	/* 执行动作，碰撞到障碍物时的反弹效果 */
 	auto actions = Sequence::create(jumpBy, callfunc, NULL);
 	this->runAction(actions);
 	FlowWord* flowWord = FlowWord::create();
@@ -95,11 +113,13 @@ void Player::doOperationCollidable(){
 }
 
 void Player::doOperationfood(Point tiledPos){
+	/* 从障碍物层清除当前格子的物体 */
 	TMXLayer* barrier = m_map->getLayer("barrier");
 	barrier->removeTileAt(tiledPos);
 	Score += 1;
 }
 void Player::doOperationwin(){
+	/* 取得格子的win属性值，判断是否为true，如果是，则游戏胜利，跳转到胜利场景 */
 	Score = 0;
 	chance = 3;
 	myHp->InitStatus(100);
@@ -108,15 +128,27 @@ void Player::doOperationwin(){
 }
 
 void Player::setTagPosition(int x, int y) {
+	/* -----------------判断前面是否不可通行---------------- */
+	/* 取主角前方的坐标 */
 	Size spriteSize = m_sprite->getContentSize();
 	Point dstPos = Point(x + spriteSize.width / 2, y);
 
+	/*对每帧都实例化一个回滚类对象，用于存储状态*/
 	data[frameCount] = new rollBackData(Point(x, y), Score);
 	frameCount++;
 
+	/* 获得当前主角前方坐标在地图中的格子位置 */
 	Point tiledPos = tileCoordForPosition(Point(dstPos.x, dstPos.y));
+	/* 获取地图格子的唯一标识 */
 	int tiledGid = meta->getTileGIDAt(tiledPos);
+	/* 不为0，代表存在这个格子 */
 	if (tiledGid != 0) {
+		/*
+		获取该地图格子的所有属性，目前我们只有一个Collidable属性
+		格子是属于meta层的，但同时也是属于整个地图的，所以在获取格子的所有属性
+		时，通过格子唯一标识在地图中取得
+		*/
+
 		Value properties = m_map->getPropertiesForGID(tiledGid);
 		ValueMap propertiesMap = properties.asValueMap();
 		context(propertiesMap, tiledPos);
@@ -124,6 +156,7 @@ void Player::setTagPosition(int x, int y) {
 
 	Entity::setTagPosition(x, y);
 
+	/* 以主角为中心移动地图 */
 	setViewPointByPlayer();
 }
 
@@ -140,8 +173,10 @@ Point Player::tileCoordForPosition(Point pos) {
 
 	int x = pos.x / tiledSize.width;
 
+	/* Cocos2d-x的默认Y坐标是由下至上的，所以要做一个相减操作 */
 	int y = (700 - pos.y) / tiledSize.height;
 
+	/* 格子坐标从零开始计算 */
 	if (x > 0) {
 		x -= 1;
 	}
@@ -153,10 +188,13 @@ Point Player::tileCoordForPosition(Point pos) {
 }
 
 void Player::rollBack(){
+	/*回退到两秒以前的状态*/
 	int t = frameCount - 60 * 2;
+	/*如果距离游戏开始不到两秒，则回退到0秒的状态*/
 	if (t < 0)
 		t = 0;
 
+	/*如果还有机会或血，则回退*/
 	if (chance > 0 && myHp->GetStatus() > 0)
 	{
 		Score = data[t]->getScore();
@@ -207,8 +245,10 @@ void Player::isOver()
 {
 	if (chance == 0 || myHp->GetStatus() <= 0)
 	{
+		/*机会用完则展示失败场景*/
 		myScene->loseScene();
 
+		/*重置相关数据*/
 		memset(data, 0, sizeof(data));
 		frameCount = 0;
 		Score = 0;
@@ -216,6 +256,7 @@ void Player::isOver()
 		myHp->Notify();
 	}
 	else if (chance < 0){
+		/*点击try again后恢复机会数*/
 		chance = 3;
 		myHp->InitStatus(100);
 		myHp->Notify();
@@ -336,6 +377,7 @@ void Player::randomEvent()
 {
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
+	/*根据当前分数对6求模获取相应碰撞事件*/
 
 	Context context(Score, m_sprite, flowWord);
 
