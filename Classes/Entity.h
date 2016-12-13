@@ -15,7 +15,7 @@ public:
 	/* 设置控制器 */
 	void setController(Controller* controller);
 
-	/* 实现SimpleMoveListener接口方法 */
+	/* 实现SimpleMoveListener接口的方法 */
 	virtual void setTagPosition(int x, int y);
 	virtual Point getTagPosition();
 protected:

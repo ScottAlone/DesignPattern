@@ -5,8 +5,7 @@
 #include "Controller.h"
 using namespace cocos2d;
 
-class SimpleMoveController : public Controller
-{
+class SimpleMoveController : public Controller {
 public:
 	CREATE_FUNC(SimpleMoveController);
 	virtual bool init();

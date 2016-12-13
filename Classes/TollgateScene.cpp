@@ -17,7 +17,7 @@ bool TollgateScene::init() {
 		return false;
 	}
 
-	/* åŠ è½½Tiledåœ°å›¾ï¼Œæ·»åŠ åˆ°åœºæ™¯ä¸­ */
+	/* ¼ÓÔØTiledµØÍ¼£¬Ìí¼Óµ½³¡¾°ÖÐ */
 	TMXTiledMap* map = TMXTiledMap::create("level05.tmx");
 	TMXLayer* groundLayer = map->layerNamed("ground");
 
@@ -34,38 +34,38 @@ bool TollgateScene::init() {
 void TollgateScene::addPlayer(TMXTiledMap* map) {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	/* åˆ›å»ºç²¾çµ */
+	/* ´´½¨¾«Áé */
 	Sprite* playerSprite = Sprite::create("tank1.png");
 
-	/* å°†ç²¾çµç»‘å®šåˆ°çŽ©å®¶å¯¹è±¡ä¸Š */
+	/* ½«¾«Áé°ó¶¨µ½Íæ¼Ò¶ÔÏóÉÏ */
 	Player* mPlayer = Player::create();
 	mPlayer->bindSprite(playerSprite);
 	mPlayer->run();
 	mPlayer->setTiledMap(map);
 
-	/* åŠ è½½å¯¹è±¡å±‚ */
+	/* ¼ÓÔØ¶ÔÏó²ã */
 	TMXObjectGroup* objGroup = map->getObjectGroup("objects");
 
-	/* åŠ è½½çŽ©å®¶åæ ‡å¯¹è±¡ */
+	/* ¼ÓÔØÍæ¼Ò×ø±ê¶ÔÏó */
 	ValueMap playerPointMap = objGroup->getObject("PlayerPoint");
 	float playerX = playerPointMap.at("x").asFloat();
 	float playerY = playerPointMap.at("y").asFloat();
 
-	/* è®¾ç½®çŽ©å®¶åæ ‡ */
+	/* ÉèÖÃÍæ¼Ò×ø±ê */
 	mPlayer->setPosition(Point(playerX,playerY));
 
-	/* å°†çŽ©å®¶æ·»åŠ åˆ°åœ°å›¾ */
+	/* ½«Íæ¼ÒÌí¼Óµ½µØÍ¼ */
 	map->addChild(mPlayer);
 
-	/* ------------ åˆ›å»ºçŽ©å®¶ç§»åŠ¨æŽ§åˆ¶å™¨ -------------- */
+	/* ------------ ´´½¨Íæ¼ÒÒÆ¶¯¿ØÖÆÆ÷ -------------- */
 	ThreeDirectionController* threeMoveControll = ThreeDirectionController::create();
 	threeMoveControll->setiXSpeed(4);
 	threeMoveControll->setiYSpeed(0);
 
-	/* æŽ§åˆ¶å™¨è¦æ·»åŠ åˆ°åœºæ™¯ä¸­æ‰èƒ½èŽ·å¾—updateäº‹ä»¶ */
+	/* ¿ØÖÆÆ÷ÒªÌí¼Óµ½³¡¾°ÖÐ²ÅÄÜ»ñµÃupdateÊÂ¼þ */
 	this->addChild(threeMoveControll);
 
-	/* è®¾ç½®æŽ§åˆ¶å™¨åˆ°ä¸»è§’èº«ä¸Š */
+	/* ÉèÖÃ¿ØÖÆÆ÷µ½Ö÷½ÇÉíÉÏ */
 	mPlayer->setController(threeMoveControll);
 }
 

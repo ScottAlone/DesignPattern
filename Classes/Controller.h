@@ -7,7 +7,7 @@
 using namespace cocos2d;
 class Controller : public Node {
 public:
-	/* è®¾ç½®ç›‘å¬å¯¹è±¡ */
+	/* ÉèÖÃ¼àÌı¶ÔÏó */
 	void setControllerListener(ControllerListener* controllerListener);
 
 protected:

@@ -1,20 +1,17 @@
-#include "Entity.h"
-//test for e.g
+#ifndef _ControllerListener_H_
+#define _ControllerListener_H_
 
-void Entity::bindSprite(Sprite* sprite) {
-	m_sprite = sprite;
-	this->addChild(m_sprite);
-}
+#include "cocos2d.h"
 
-void Entity::setController(Controller* controller) {
-	this->m_controller = controller;
-	m_controller->setControllerListener(this);
-}
+using namespace cocos2d;
 
-void Entity::setTagPosition(int x, int y) {
-	setPosition(Point(x, y));
-}
+class ControllerListener {
+public:
+	/* 设置目标坐标 */
+	virtual void setTagPosition(int x, int y) = 0;
 
-Point Entity::getTagPosition() {
-	return getPosition();
-}
+	/* 获取目标坐标 */
+	virtual Point getTagPosition() = 0;
+};
+
+#endif

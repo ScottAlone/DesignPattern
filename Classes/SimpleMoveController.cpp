@@ -3,7 +3,7 @@
 bool SimpleMoveController::init() {
 	this->m_iSpeed = 0;
 
-	/* æ¯ä¸€å¸§éƒ½è¦è°ƒç”¨updateå‡½æ•° */
+	/* Ã¿Ò»Ö¡¶¼Òªµ÷ÓÃupdateº¯Êý£¬ËùÒÔÒªÕâÑùÉèÖÃ */
 	this->scheduleUpdate();
 
 	return true;
@@ -14,7 +14,7 @@ void SimpleMoveController::update(float dt) {
 		return;
 	}
 
-	/* å¢žåŠ ç§»åŠ¨å¯¹è±¡çš„xåæ ‡å€¼ */
+	/* Ôö¼ÓÒÆ¶¯¶ÔÏóµÄx×ø±êÖµ */
 	Point pos = m_controllerListener->getTagPosition();
 	pos.x += m_iSpeed;
 	m_controllerListener->setTagPosition(pos.x, pos.y);

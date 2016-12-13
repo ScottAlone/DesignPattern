@@ -15,12 +15,12 @@ void FlowWord::showWord( const char* text, Point pos ) {
 	m_textLab->setPosition(pos);
 	m_textLab->setVisible(true);
 
-	/* 缁勫悎涓や釜鍔ㄤ綔锛屾斁澶у悗缂╁皬 */
+	/* 组合两个动作，放大后缩小 */
     auto scaleLarge = ScaleTo::create(0.8f, 2.5f, 2.5f);
     auto scaleSmall = ScaleTo::create(1.0f, 0.5f, 0.5f);
 
     auto callFunc = CallFunc::create([&](){
-        /* 鍔ㄤ綔缁撴潫锛屼粠鐖惰妭鐐逛腑鍒犻櫎鑷韩 */
+        /* 动作结束，从父节点中删除自身 */
         m_textLab->setVisible(false);
         m_textLab->removeFromParentAndCleanup(true);
     });

@@ -4,10 +4,10 @@ bool ThreeDirectionController::init() {
 	this->m_iXSpeed = 0;
 	this->m_iYSpeed = 0;
 
-	/* æ³¨å†Œå±å¹•è§¦æ‘¸äº‹ä»¶ */
+	/* ×¢²áÆÁÄ»´¥ÃşÊÂ¼ş */
 	registeTouchEvent();
 
-	/* å¼€å¯updateå‡½æ•°çš„è°ƒç”¨ */
+	/* ¿ªÆôupdateº¯ÊıµÄµ÷ÓÃ */
 	this->scheduleUpdate();
 	return true;
 }
@@ -16,7 +16,7 @@ void ThreeDirectionController::update(float dt) {
 	if (m_controllerListener == NULL) {
 		return;
 	}
-	/* è®©ç§»åŠ¨å¯¹è±¡åœ¨xå’Œyæ–¹å‘ä¸Šå¢åŠ åæ ‡ */
+	/* ÈÃÒÆ¶¯¶ÔÏóÔÚxºÍy·½ÏòÉÏÔö¼Ó×ø±ê */
 	Point curPos = m_controllerListener->getTagPosition();
 	curPos.x += m_iXSpeed;
 	curPos.y += m_iYSpeed;
@@ -40,13 +40,13 @@ void ThreeDirectionController::registeTouchEvent() {
 	};
 
 	listener->onTouchMoved = [&](Touch* touch, Event* event) {
-		/* è·å–å•å‡»åæ ‡ï¼ŒåŸºäºCocos2d-x */
+		/* »ñÈ¡µ¥»÷×ø±ê£¬»ùÓÚCocos2d-x */
 		Point touchPos = Director::getInstance()->convertToGL(touch->getLocationInView());
 
-		/* è¢«æ§åˆ¶å¯¹è±¡çš„åæ ‡ */
+		/* ±»¿ØÖÆ¶ÔÏóµÄ×ø±ê */
 		Point pos = m_controllerListener->getTagPosition();
 
-		/* åˆ¤æ–­æ˜¯å‘ä¸Šç§»åŠ¨è¿˜æ˜¯å‘ä¸‹ç§»åŠ¨ */
+		/* ÅĞ¶ÏÊÇÏòÉÏÒÆ¶¯»¹ÊÇÏòÏÂÒÆ¶¯ */
 		int iSpeed = 0;
 		if (touchPos.y > pos.y) {
 			iSpeed = 2;
@@ -59,7 +59,7 @@ void ThreeDirectionController::registeTouchEvent() {
 	};
 
 	listener->onTouchEnded = [&](Touch* touch, Event* event) {
-		/* åœæ­¢Yåæ ‡ä¸Šçš„ç§»åŠ¨ */
+		/* Í£Ö¹Y×ø±êÉÏµÄÒÆ¶¯ */
 		setiYSpeed(0);
 	};
 
