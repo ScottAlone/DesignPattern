@@ -1,29 +1,25 @@
 #include "SimpleMoveController.h"
 
-bool SimpleMoveController::init()
-{
+bool SimpleMoveController::init() {
 	this->m_iSpeed = 0;
 
-	/* Ã¿Ò»Ö¡¶¼Òªµ÷ÓÃupdateº¯Êý£¬ËùÒÔÒªÕâÑùÉèÖÃ */
+	/* æ¯ä¸€å¸§éƒ½è¦è°ƒç”¨updateå‡½æ•°ï¼Œæ‰€ä»¥è¦è¿™æ ·è®¾ç½® */
 	this->scheduleUpdate();
 
 	return true;
 }
 
-void SimpleMoveController::update(float dt)
-{
-	if (m_controllerListener == NULL)
-	{
+void SimpleMoveController::update(float dt) {
+	if (m_controllerListener == NULL) {
 		return;
 	}
 
-	/* Ôö¼ÓÒÆ¶¯¶ÔÏóµÄx×ø±êÖµ */
+	/* å¢žåŠ ç§»åŠ¨å¯¹è±¡çš„xåæ ‡å€¼ */
 	Point pos = m_controllerListener->getTagPosition();
 	pos.x += m_iSpeed;
 	m_controllerListener->setTagPosition(pos.x, pos.y);
 }
 
-void SimpleMoveController::setiSpeed(int iSpeed)
-{
+void SimpleMoveController::setiSpeed(int iSpeed) {
 	this->m_iSpeed = iSpeed;
 }
