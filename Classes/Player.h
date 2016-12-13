@@ -4,8 +4,7 @@
 #include "Entity.h"
 #include "Observer.h"
 
-class Player : public Entity
-{
+class Player : public Entity {
 public:
 	CREATE_FUNC(Player);
 	virtual bool init();
@@ -31,8 +30,7 @@ private:
 	Point tileCoordForPosition(Point pos);
 	cocos2d::Animate* createAnimate1();
 };
-class rollBackData
-{
+class rollBackData {
 public:
 	rollBackData(Point p, int s){ point = p; score = s; };
 	int getPointx(){ return point.x; };
@@ -42,14 +40,12 @@ private:
 	Point point;
 	int score;
 };
-class Mapsize
-{
+class Mapsize {
 private:
 	int width;
 	int height;
 	Mapsize(){};
-	Mapsize(int w, int h)   //构造函数是私有的  
-	{
+	Mapsize(int w, int h) {
 		width = w;
 		height = h;
 	}
