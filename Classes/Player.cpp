@@ -1,4 +1,4 @@
-﻿#include "Player.h"
+#include "Player.h"
 #include "WinScene.h"
 #include "FlowWord.h"
 #include "TollgateScene.h"
@@ -94,7 +94,7 @@ void Player::context(ValueMap num1, Point tiledPos) {
 		doOperationwin();
 }
 
-void Player::doOperationCollidable(){
+void Player::doOperationCollidable() {
 	isJumping = true;
 
 	auto jumpBy = JumpBy::create(0.8f, Point(-100, 0), 80, 1);
@@ -160,8 +160,7 @@ void Player::setTagPosition(int x, int y) {
 	setViewPointByPlayer();
 }
 
-void Player::setTiledMap(TMXTiledMap* map)
-{
+void Player::setTiledMap(TMXTiledMap* map) {
 	m_map = map;
 	this->meta = m_map->getLayer("meta");
 	this->meta->setVisible(false);
@@ -241,8 +240,7 @@ void Player::rollBack(){
 	isJumping = false;
 }
 
-void Player::isOver()
-{
+void Player::isOver() {
 	if (chance == 0 || myHp->GetStatus() <= 0)
 	{
 		/*机会用完则展示失败场景*/
@@ -275,7 +273,7 @@ public:
 	virtual void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 	}
 };
-class Operation0 : public Strategy, public Player{
+class Operation0 : public Strategy, public Player {
 	void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableOne();
 		Score = collidables->change(Score);
@@ -284,7 +282,7 @@ class Operation0 : public Strategy, public Player{
 		flowWord->showWord(tmp, m_sprite->getPosition());
 	}
 };
-class Operation1 : public Strategy{
+class Operation1 : public Strategy {
 	void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableTwo();
 		string t = collidables->getInfo().c_str();
@@ -292,7 +290,7 @@ class Operation1 : public Strategy{
 		flowWord->showWord(tmp, m_sprite->getPosition());
 	}
 };
-class Operation2 : public Strategy{
+class Operation2 : public Strategy {
 	void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableThree();
 		string t = collidables->getInfo().c_str();
@@ -300,7 +298,7 @@ class Operation2 : public Strategy{
 		flowWord->showWord(tmp, m_sprite->getPosition());
 	}
 };
-class Operation3 : public Strategy{
+class Operation3 : public Strategy {
 	void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableOne();
 		collidables = new Collidable1(collidables);
@@ -310,7 +308,7 @@ class Operation3 : public Strategy{
 		flowWord->showWord(tmp, m_sprite->getPosition());
 	}
 };
-class Operation4 : public Strategy{
+class Operation4 : public Strategy {
 	void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableTwo();
 		collidables = new Collidable2(collidables);
@@ -319,7 +317,7 @@ class Operation4 : public Strategy{
 		flowWord->showWord(tmp, m_sprite->getPosition());
 	}
 };
-class Operation5 : public Strategy{
+class Operation5 : public Strategy {
 	void doOperation(int Score, Sprite* m_sprite, FlowWord* flowWord) {
 		Collidables* collidables = new CollidableThree();
 		collidables = new Collidable3(collidables);
@@ -329,8 +327,7 @@ class Operation5 : public Strategy{
 	}
 };
 
-class Context : public Strategy
-{
+class Context : public Strategy {
 public:
 	Context(int Score, Sprite* m_sprite, FlowWord* flowWord){
 
@@ -341,8 +338,7 @@ public:
 		Operation4 *op4 = new Operation4();
 		Operation5 *op5 = new Operation5();
 
-		switch (Score % 6)
-		{
+		switch (Score % 6) {
 		case 0:
 			this->strategy = op0;
 			this->strategy->doOperation(Score, m_sprite, flowWord);
@@ -373,8 +369,7 @@ public:
 	Strategy *strategy;
 };
 
-void Player::randomEvent()
-{
+void Player::randomEvent() {
 	FlowWord* flowWord = FlowWord::create();
 	this->addChild(flowWord);
 	/*根据当前分数对6求模获取相应碰撞事件*/
