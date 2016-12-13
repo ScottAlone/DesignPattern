@@ -7,10 +7,10 @@ using namespace cocos2d;
 
 class ControllerListener {
 public:
-	/* 设置目标坐标 */
+	/* 璁剧疆鐩爣鍧愭爣 */
 	virtual void setTagPosition(int x, int y) = 0;
 
-	/* 获取目标坐标 */
+	/* 鑾峰彇鐩爣鍧愭爣 */
 	virtual Point getTagPosition() = 0;
 };
 
