@@ -5,10 +5,9 @@
 #include "ControllerListener.h"
 
 using namespace cocos2d;
-class Controller : public Node
-{
+class Controller : public Node {
 public:
-	/* ÉèÖÃ¼àÌı¶ÔÏó */
+	/* è®¾ç½®ç›‘å¬å¯¹è±¡ */
 	void setControllerListener(ControllerListener* controllerListener);
 
 protected:
