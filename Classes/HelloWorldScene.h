@@ -3,8 +3,7 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Layer
-{
+class HelloWorld : public cocos2d::Layer {
 public:
     static cocos2d::Scene* createScene();
 
