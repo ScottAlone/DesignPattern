@@ -5,22 +5,18 @@
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
-
 }
 
-AppDelegate::~AppDelegate() 
-{
+AppDelegate::~AppDelegate() {
 }
 
-void AppDelegate::initGLContextAttrs()
-{
+void AppDelegate::initGLContextAttrs() {
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
 
     GLView::setGLContextAttrs(glContextAttrs);
 }
 
-static int register_all_packages()
-{
+static int register_all_packages() {
     return 0;
 }
 
