@@ -6,8 +6,7 @@
 USING_NS_CC;
 
 SceneManager *scene;
-Scene* HelloWorld::createScene()
-{
+Scene* HelloWorld::createScene() {
 	auto scene = Scene::create();
 
 	auto layer = HelloWorld::create();
@@ -17,10 +16,8 @@ Scene* HelloWorld::createScene()
 	return scene;
 }
 
-bool HelloWorld::init()
-{
-	if (!Layer::init())
-	{
+bool HelloWorld::init() {
+	if (!Layer::init()) {
 		return false;
 	}
 
@@ -50,7 +47,6 @@ bool HelloWorld::init()
 	auto menu1 = Menu::create(closeItem1, NULL);
 	menu1->setPosition(Vec2::ZERO);
 	this->addChild(menu1, 1);
-
 	auto sprite = Sprite::create("StartScene.png");
 
 	sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
@@ -60,34 +56,31 @@ bool HelloWorld::init()
 	return true;
 }
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
-{
+void HelloWorld::menuCloseCallback(Ref* pSender) {
 	scene->tollgateScene();
 }
 
-void HelloWorld::menuCloseCallback1(Ref* pSender)
-{
+void HelloWorld::menuCloseCallback1(Ref* pSender) {
 	scene->helpScene();
 }
-cocos2d::Animate* HelloWorld::createAnimate1()
-{
+cocos2d::Animate* HelloWorld::createAnimate1() {
 	int iFrameNum = 3;
 	SpriteFrame* frame = NULL;
 	Vector<SpriteFrame*> frameVec;
 
-	/* ÓÃÒ»¸öÁĞ±í±£´æËùÓĞSpriteFrame¶ÔÏó */
+	/* ç”¨ä¸€ä¸ªåˆ—è¡¨ä¿å­˜æ‰€æœ‰SpriteFrameå¯¹è±¡ */
 	for (int i = 1; i <= iFrameNum; i++) {
-		/* ÓÃÃ¿Ò»ÕÅÍ¼Æ¬´´½¨SpriteFrame¶ÔÏó */
+		/* ç”¨æ¯ä¸€å¼ å›¾ç‰‡åˆ›å»ºSpriteFrameå¯¹è±¡ */
 		frame = SpriteFrame::create(StringUtils::format("tank%d.png", i), Rect(0, 0, 130, 130));
 		frameVec.pushBack(frame);
 	}
 
-	/* Ê¹ÓÃSpriteFrameÁĞ±í´´½¨¶¯»­¶ÔÏó */
+	/* ä½¿ç”¨SpriteFrameåˆ—è¡¨åˆ›å»ºåŠ¨ç”»å¯¹è±¡ */
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
 	animation->setLoops(-1);
 	animation->setDelayPerUnit(0.1f);
 
-	/* ½«¶¯»­°ü×°³ÉÒ»¸ö¶¯×÷ */
+	/* å°†åŠ¨ç”»åŒ…è£…æˆä¸€ä¸ªåŠ¨ä½œ */
 	Animate* action = Animate::create(animation);
 
 	return action;
