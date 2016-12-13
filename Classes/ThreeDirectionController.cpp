@@ -1,25 +1,22 @@
 #include "ThreeDirectionController.h"
 
-bool ThreeDirectionController::init()
-{
+bool ThreeDirectionController::init() {
 	this->m_iXSpeed = 0;
 	this->m_iYSpeed = 0;
 
-	/* ×¢²áÆÁÄ»´¥ÃşÊÂ¼ş */
+	/* æ³¨å†Œå±å¹•è§¦æ‘¸äº‹ä»¶ */
 	registeTouchEvent();
 
-	/* ¿ªÆôupdateº¯ÊıµÄµ÷ÓÃ */
+	/* å¼€å¯updateå‡½æ•°çš„è°ƒç”¨ */
 	this->scheduleUpdate();
 	return true;
 }
 
-void ThreeDirectionController::update(float dt)
-{
-	if (m_controllerListener == NULL)
-	{
+void ThreeDirectionController::update(float dt) {
+	if (m_controllerListener == NULL) {
 		return;
 	}
-	/* ÈÃÒÆ¶¯¶ÔÏóÔÚxºÍy·½ÏòÉÏÔö¼Ó×ø±ê */
+	/* è®©ç§»åŠ¨å¯¹è±¡åœ¨xå’Œyæ–¹å‘ä¸Šå¢åŠ åæ ‡ */
 	Point curPos = m_controllerListener->getTagPosition();
 	curPos.x += m_iXSpeed;
 	curPos.y += m_iYSpeed;
@@ -27,47 +24,42 @@ void ThreeDirectionController::update(float dt)
 	m_controllerListener->setTagPosition(curPos.x + m_iXSpeed, curPos.y + m_iYSpeed);
 }
 
-void ThreeDirectionController::setiXSpeed(int iSpeed)
-{
+void ThreeDirectionController::setiXSpeed(int iSpeed) {
 	this->m_iXSpeed = iSpeed;
 }
 
-void ThreeDirectionController::setiYSpeed(int iSpeed)
-{
+void ThreeDirectionController::setiYSpeed(int iSpeed) {
 	this->m_iYSpeed = iSpeed;
 }
 
-void ThreeDirectionController::registeTouchEvent()
-{
+void ThreeDirectionController::registeTouchEvent() {
 	auto listener = EventListenerTouchOneByOne::create();
 
-	listener->onTouchBegan = [](Touch* touch, Event* event){
+	listener->onTouchBegan = [](Touch* touch, Event* event) {
 		return true;
 	};
 
-	listener->onTouchMoved = [&](Touch* touch, Event* event){
-		/* »ñÈ¡µ¥»÷×ø±ê£¬»ùÓÚCocos2d-x */
+	listener->onTouchMoved = [&](Touch* touch, Event* event) {
+		/* è·å–å•å‡»åæ ‡ï¼ŒåŸºäºCocos2d-x */
 		Point touchPos = Director::getInstance()->convertToGL(touch->getLocationInView());
 
-		/* ±»¿ØÖÆ¶ÔÏóµÄ×ø±ê */
+		/* è¢«æ§åˆ¶å¯¹è±¡çš„åæ ‡ */
 		Point pos = m_controllerListener->getTagPosition();
 
-		/* ÅĞ¶ÏÊÇÏòÉÏÒÆ¶¯»¹ÊÇÏòÏÂÒÆ¶¯ */
+		/* åˆ¤æ–­æ˜¯å‘ä¸Šç§»åŠ¨è¿˜æ˜¯å‘ä¸‹ç§»åŠ¨ */
 		int iSpeed = 0;
-		if (touchPos.y > pos.y)
-		{
+		if (touchPos.y > pos.y) {
 			iSpeed = 2;
 		}
-		else
-		{
+		else {
 			iSpeed = -2;
 		}
 
 		setiYSpeed(iSpeed);
 	};
 
-	listener->onTouchEnded = [&](Touch* touch, Event* event){
-		/* Í£Ö¹Y×ø±êÉÏµÄÒÆ¶¯ */
+	listener->onTouchEnded = [&](Touch* touch, Event* event) {
+		/* åœæ­¢Yåæ ‡ä¸Šçš„ç§»åŠ¨ */
 		setiYSpeed(0);
 	};
 
