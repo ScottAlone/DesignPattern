@@ -11,7 +11,6 @@ public:
 	CREATE_FUNC(WinScene);
 	virtual bool init();
 	void menuCloseCallback(cocos2d::Ref* pSender);
-
 };
 
 #endif
