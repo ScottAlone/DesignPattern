@@ -2,8 +2,6 @@
 #include "SceneFactory.h"
 #include "SceneProduct.h"
 #include "FlowWord.h"
-#include "TollgateScene.h"
-#include "HelloWorldScene.h"
 #include "Collidables.h"
 #include "Observer.h"
 #include "SceneManager.h"

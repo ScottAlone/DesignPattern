@@ -1,16 +1,16 @@
 #ifndef _SCENEMANAGER_H_
 #define _SCENEMANAGER_H_
-#include "HelpScene.h"
 #include "SceneFactory.h"
 #include "SceneProduct.h"
-#include "TollgateScene.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
 class SceneManager {
 public:
 	void helpScene() { 
-		Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, HelpScene::createScene())); 
+		FactoryHelp* fh = new FactoryHelp();
+		ProductHelp* product = fh->createProduct();
+		Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, product->createScene())); 
 	}
 	void winScene() { 
 		FactoryWin* fw = new FactoryWin();
@@ -23,7 +23,9 @@ public:
 		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, product->createScene()));
 	}
 	void tollgateScene() {
-		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, TollgateScene::createScene())); 
+		FactoryGate* fg = new FactoryGate();
+		ProductGate* product = fg->createProduct();
+		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, product->createScene())); 
 	}
 };
 #endif

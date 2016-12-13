@@ -23,6 +23,18 @@ FactoryLose::FactoryLose(){
 FactoryLose::~FactoryLose(){
 }
 
+FactoryHelp::FactoryHelp(){
+}
+
+FactoryHelp::~FactoryHelp(){
+}
+
+FactoryGate::FactoryGate(){
+}
+
+FactoryGate::~FactoryGate(){
+}
+
 
 ProductWin* FactoryWin::createProduct(){
 	ProductWin* temp = new ProductWin();
@@ -31,5 +43,20 @@ ProductWin* FactoryWin::createProduct(){
 
 ProductLose* FactoryLose::createProduct(){
 	ProductLose* temp = new ProductLose();
+	return temp;
+}
+
+ProductHelp* FactoryHelp::createProduct(){
+	ProductHelp* temp = new ProductHelp();
+	return temp;
+}
+
+ProductGate* FactoryGate::createProduct(){
+	ProductGate* temp = new ProductGate();
+	return temp;
+}
+
+ProductStart* FactoryStart::createProduct(){
+	ProductStart* temp = new ProductStart();
 	return temp;
 }

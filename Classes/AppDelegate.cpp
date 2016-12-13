@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
-#include "TollgateScene.h"
+#include "SceneProduct.h"
+#include "SceneFactory.h"
 
 USING_NS_CC;
 
@@ -35,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-	auto scene = HelloWorld::createScene();
+	auto scene = ProductStart::createScene();
 
     director->runWithScene(scene);
 

@@ -41,4 +41,40 @@ public:
 
 };
 
+class FactoryHelp :public SceneFactory{
+
+public:
+	FactoryHelp();
+
+	~FactoryHelp();
+
+public:
+	ProductHelp* createProduct();
+
+};
+
+class FactoryGate :public SceneFactory{
+
+public:
+	FactoryGate();
+
+	~FactoryGate();
+
+public:
+	ProductGate* createProduct();
+
+};
+
+class FactoryStart :public SceneFactory{
+
+public:
+	FactoryStart();
+
+	~FactoryStart();
+
+public:
+	ProductStart* createProduct();
+
+};
+
 #endif
