@@ -12,14 +12,12 @@ Scene* TollgateScene::createScene()
 	return scene;
 }
 
-bool TollgateScene::init()
-{
-	if (!Layer::init())
-	{
+bool TollgateScene::init() {
+	if (!Layer::init()) {
 		return false;
 	}
 
-	/* ¼ÓÔØTiledµØÍ¼£¬Ìí¼Óµ½³¡¾°ÖÐ */
+	/* åŠ è½½Tiledåœ°å›¾ï¼Œæ·»åŠ åˆ°åœºæ™¯ä¸­ */
 	TMXTiledMap* map = TMXTiledMap::create("level05.tmx");
 	TMXLayer* groundLayer = map->layerNamed("ground");
 
@@ -36,42 +34,41 @@ bool TollgateScene::init()
 void TollgateScene::addPlayer(TMXTiledMap* map) {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	/* ´´½¨¾«Áé */
+	/* åˆ›å»ºç²¾çµ */
 	Sprite* playerSprite = Sprite::create("tank1.png");
 
-	/* ½«¾«Áé°ó¶¨µ½Íæ¼Ò¶ÔÏóÉÏ */
+	/* å°†ç²¾çµç»‘å®šåˆ°çŽ©å®¶å¯¹è±¡ä¸Š */
 	Player* mPlayer = Player::create();
 	mPlayer->bindSprite(playerSprite);
 	mPlayer->run();
 	mPlayer->setTiledMap(map);
 
-	/* ¼ÓÔØ¶ÔÏó²ã */
+	/* åŠ è½½å¯¹è±¡å±‚ */
 	TMXObjectGroup* objGroup = map->getObjectGroup("objects");
 
-	/* ¼ÓÔØÍæ¼Ò×ø±ê¶ÔÏó */
+	/* åŠ è½½çŽ©å®¶åæ ‡å¯¹è±¡ */
 	ValueMap playerPointMap = objGroup->getObject("PlayerPoint");
 	float playerX = playerPointMap.at("x").asFloat();
 	float playerY = playerPointMap.at("y").asFloat();
 
-	/* ÉèÖÃÍæ¼Ò×ø±ê */
+	/* è®¾ç½®çŽ©å®¶åæ ‡ */
 	mPlayer->setPosition(Point(playerX,playerY));
 
-	/* ½«Íæ¼ÒÌí¼Óµ½µØÍ¼ */
+	/* å°†çŽ©å®¶æ·»åŠ åˆ°åœ°å›¾ */
 	map->addChild(mPlayer);
 
-	/* ------------ ´´½¨Íæ¼ÒÒÆ¶¯¿ØÖÆÆ÷ -------------- */
+	/* ------------ åˆ›å»ºçŽ©å®¶ç§»åŠ¨æŽ§åˆ¶å™¨ -------------- */
 	ThreeDirectionController* threeMoveControll = ThreeDirectionController::create();
 	threeMoveControll->setiXSpeed(4);
 	threeMoveControll->setiYSpeed(0);
 
-	/* ¿ØÖÆÆ÷ÒªÌí¼Óµ½³¡¾°ÖÐ²ÅÄÜ»ñµÃupdateÊÂ¼þ */
+	/* æŽ§åˆ¶å™¨è¦æ·»åŠ åˆ°åœºæ™¯ä¸­æ‰èƒ½èŽ·å¾—updateäº‹ä»¶ */
 	this->addChild(threeMoveControll);
 
-	/* ÉèÖÃ¿ØÖÆÆ÷µ½Ö÷½ÇÉíÉÏ */
+	/* è®¾ç½®æŽ§åˆ¶å™¨åˆ°ä¸»è§’èº«ä¸Š */
 	mPlayer->setController(threeMoveControll);
 }
 
-void TollgateScene::update(float)
-{
+void TollgateScene::update(float) {
 	static_cast<Label*>(this->getChildByName("label"))->setString(StringUtils::format("score:%d hp:%d", Player::getScore(), Player::getHp()));
 }
