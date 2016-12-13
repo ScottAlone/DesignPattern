@@ -29,5 +29,3 @@ void FlowWord::showWord( const char* text, Point pos ) {
 
 	m_textLab->runAction(actions);
 }
-
-

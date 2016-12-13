@@ -1,5 +1,4 @@
 #include "SceneProduct.h"
-#include"SimpleMoveController.h"
 #include "Player.h"
 #include"ThreeDirectionController.h"
 #include "SimpleAudioEngine.h"
@@ -13,14 +12,11 @@ USING_NS_CC;
 SceneProduct::SceneProduct(){
 }
 
-
 SceneProduct::~SceneProduct(){
 }
 
-
 ProductWin::ProductWin(){
 }
-
 
 ProductWin::~ProductWin(){
 }
@@ -142,7 +138,7 @@ Scene* ProductHelp::createScene() {
 	return scene;
 }
 
-void ProductHelp::createLabel(string content, string font, int size, int width, int height){
+void ProductHelp::createLabel(string content, string font, int size, int width, int height) {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Label* Lab = Label::createWithSystemFont(content, font, size);
 	Lab->setPosition(Point(width, height));
