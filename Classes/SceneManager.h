@@ -7,11 +7,19 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
-class SceneManager{
+class SceneManager {
 public:
-	void helpScene(){ Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, HelpScene::createScene())); }
-	void winScene(){ Director::getInstance()->replaceScene(WinScene::createScene()); }
-	void loseScene(){ Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene())); }
-	void tollgateScene(){ Director::getInstance()->replaceScene(TransitionFade::create(1.0f, TollgateScene::createScene())); }
+	void helpScene() { 
+		Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, HelpScene::createScene())); 
+	}
+	void winScene() { 
+		Director::getInstance()->replaceScene(WinScene::createScene()); 
+	}
+	void loseScene() {
+		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, LoseScene::createScene())); 
+	}
+	void tollgateScene() {
+		Director::getInstance()->replaceScene(TransitionFade::create(1.0f, TollgateScene::createScene())); 
+	}
 };
 #endif
