@@ -3,7 +3,7 @@
 bool SimpleMoveController::init() {
 	this->m_iSpeed = 0;
 
-	/* 每一帧都要调用update函数，所以要这样设置 */
+	/* 每一帧都要调用update函数 */
 	this->scheduleUpdate();
 
 	return true;
