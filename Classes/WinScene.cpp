@@ -12,8 +12,7 @@ Scene* WinScene::createScene() {
 }
 
 bool WinScene::init() {
-	if (!Layer::init())
-	{
+	if (!Layer::init()) {
 		return false;
 	}
 	Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -39,11 +38,9 @@ bool WinScene::init() {
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
-
 	return true;
 }
 
-void WinScene::menuCloseCallback(Ref* pSender)
-{
+void WinScene::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, TollgateScene::createScene()));
 }
