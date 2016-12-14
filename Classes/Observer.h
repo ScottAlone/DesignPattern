@@ -16,8 +16,12 @@ class HP
 public:
 	HP() {}
 	virtual ~HP() {}
-	void Attach(Observer *observer) { m_observers.push_back(observer); }     //添加观察者  
-	void Remove(Observer *observer) { m_observers.remove(observer); }        //移除观察者  
+	void Attach(Observer *observer) { //添加观察者
+		m_observers.push_back(observer); 
+	}      
+	void Remove(Observer *observer) { //移除观察者  
+		m_observers.remove(observer); 
+	}        
 	void Notify() //通知观察者  
 	{
 		list<Observer*>::iterator iter = m_observers.begin();

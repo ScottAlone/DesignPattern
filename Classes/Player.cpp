@@ -375,3 +375,18 @@ void Player::randomEvent() {
 	Context context(Score, m_sprite, flowWord);
 
 }
+
+Player* Player::create() {
+
+	Player *pRet = new Player();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
+}

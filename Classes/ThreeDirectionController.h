@@ -7,7 +7,7 @@ using namespace cocos2d;
 
 class ThreeDirectionController : public Controller {
 public:
-	CREATE_FUNC(ThreeDirectionController);
+	static ThreeDirectionController* create();
 	virtual bool init();
 	virtual void update(float dt);
 

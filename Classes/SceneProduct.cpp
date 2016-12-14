@@ -17,7 +17,7 @@ Scene* ProductWin::createScene() {
 	return scene;
 }
 
-ProductWin* ProductWin::create() {
+inline ProductWin* ProductWin::create() {
 
 	ProductWin *pRet = new ProductWin();
 	if (pRet && pRet->init()) {
@@ -74,7 +74,7 @@ Scene* ProductLose::createScene() {
 	return scene;
 }
 
-ProductLose* ProductLose::create() {
+inline ProductLose* ProductLose::create() {
 
 	ProductLose *pRet = new ProductLose();
 	if (pRet && pRet->init()) {
@@ -131,7 +131,7 @@ Scene* ProductHelp::createScene() {
 	return scene;
 }
 
-ProductHelp* ProductHelp::create() {
+inline ProductHelp* ProductHelp::create() {
 
 	ProductHelp *pRet = new ProductHelp(); 
 	if (pRet && pRet->init()) {
@@ -213,7 +213,7 @@ Scene* ProductGate::createScene()
 	return scene;
 }
 
-ProductGate* ProductGate::create() {
+inline ProductGate* ProductGate::create() {
 
 	ProductGate *pRet = new ProductGate();
 	if (pRet && pRet->init()) {
@@ -300,7 +300,7 @@ Scene* ProductStart::createScene() {
 	return scene;
 }
 
-ProductStart* ProductStart::create() {
+inline ProductStart* ProductStart::create() {
 
 	ProductStart *pRet = new ProductStart();
 	if (pRet && pRet->init()) {

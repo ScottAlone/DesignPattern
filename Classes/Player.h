@@ -6,7 +6,7 @@
 
 class Player : public Entity {
 public:
-	CREATE_FUNC(Player);
+	static Player* create();
 	virtual bool init();
 	virtual void setTagPosition(int x, int y) override;
 	void run();

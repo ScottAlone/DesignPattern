@@ -65,3 +65,18 @@ void ThreeDirectionController::registeTouchEvent() {
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
+
+ThreeDirectionController* ThreeDirectionController::create() {
+
+	ThreeDirectionController *pRet = new ThreeDirectionController();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
+}

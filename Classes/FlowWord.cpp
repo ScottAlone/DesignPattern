@@ -29,3 +29,18 @@ void FlowWord::showWord( const char* text, Point pos ) {
 
 	m_textLab->runAction(actions);
 }
+
+FlowWord* FlowWord::create() {
+
+	FlowWord *pRet = new FlowWord();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
+}

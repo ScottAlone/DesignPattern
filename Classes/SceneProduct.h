@@ -9,6 +9,7 @@ USING_NS_CC;
 
 class SceneProduct : public Layer {
 public:
+	virtual bool init() = 0;
 };
 
 
