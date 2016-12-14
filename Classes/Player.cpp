@@ -17,7 +17,6 @@ bool Player::init() {
 	Observer *observer1 = new ObserverHp(myHp);
 	myHp->Attach(observer1);
 	myHp->InitStatus(100);
-	myHp->Notify();
 	isJumping = false;
 	return true;
 }
@@ -121,7 +120,7 @@ void Player::doOperationwin(){
 	Score = 0;
 	chance = 3;
 	myHp->InitStatus(100);
-	myHp->Notify();
+	myHp->Notify(Score);
 	myScene->winScene();
 }
 
@@ -200,11 +199,11 @@ void Player::rollBack(){
 		{
 		case 0:
 			myHp->SetStatus(25);
-			myHp->Notify();
+			Score = myHp->Notify(Score);
 			break;
 		case 1:
 			myHp->SetStatus(25);
-			myHp->Notify();
+			Score = myHp->Notify(Score);
 			if (data[frameCount - 1]->getPointx() * 2 <= p1->getWidth()){
 				Entity::setTagPosition(data[frameCount - 1]->getPointx() * 2, data[frameCount - 1]->getPointy());
 			}
@@ -214,19 +213,19 @@ void Player::rollBack(){
 			break;
 		case 2:
 			myHp->SetStatus(50);
-			myHp->Notify();
+			Score = myHp->Notify(Score);
 			Entity::setTagPosition(data[frameCount - 1]->getPointx() / 2, data[frameCount - 1]->getPointy());
 			break;
 		case 3:
 			myHp->SetStatus(50);
-			myHp->Notify();
+			Score = myHp->Notify(Score);
 			break;
 		case 4:
 			Entity::setTagPosition(p1->getWidth() - 210, data[frameCount - 1]->getPointy());
 			break;
 		case 5:
 			myHp->SetStatus(25);
-			myHp->Notify();
+			Score = myHp->Notify(Score);
 			Entity::setTagPosition(0, data[frameCount - 1]->getPointy());
 			break;
 		default:
@@ -249,13 +248,13 @@ void Player::isOver() {
 		frameCount = 0;
 		Score = 0;
 		myHp->InitStatus(100);
-		myHp->Notify();
+		Score = myHp->Notify(Score);
 	}
 	else if (chance < 0){
 		/*点击try again后恢复机会数*/
 		chance = 3;
 		myHp->InitStatus(100);
-		myHp->Notify();
+		Score = myHp->Notify(Score);
 	}
 }
 

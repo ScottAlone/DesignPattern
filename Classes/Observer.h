@@ -8,7 +8,7 @@ class Observer
 public:
 	Observer() {}
 	virtual ~Observer() {}
-	virtual void Update() {}
+	virtual int Update(int i) { return 1; }
 };
 //血量  
 class HP
@@ -22,11 +22,13 @@ public:
 	void Remove(Observer *observer) { //移除观察者  
 		m_observers.remove(observer); 
 	}        
-	void Notify() //通知观察者  
+	int Notify(int i) //通知观察者  
 	{
+		int j = 0;
 		list<Observer*>::iterator iter = m_observers.begin();
 		for (; iter != m_observers.end(); iter++)
-			(*iter)->Update();
+			j = (*iter)->Update(i);
+		return j;
 	}
 	virtual void InitStatus(int s) { hp = s; }
 	virtual void SetStatus(int s) { hp = hp - s; } //设置状态  
@@ -53,9 +55,10 @@ private:
 public:
 	ObserverHp(HP *hp) : m_hp(hp) {}
 	~ObserverHp() {}
-	void Update()  //获得更新状态  
+	int Update(int i)  //获得更新状态  
 	{
 		int hp = m_hp->GetStatus();
+		return (i - 100);
 	}
 };
 #endif
