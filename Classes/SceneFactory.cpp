@@ -1,41 +1,5 @@
 #include "SceneFactory.h"
 
-
-SceneFactory::SceneFactory(){
-}
-
-
-SceneFactory::~SceneFactory(){
-}
-
-
-FactoryWin::FactoryWin(){
-}
-
-
-FactoryWin::~FactoryWin(){
-}
-
-FactoryLose::FactoryLose(){
-}
-
-
-FactoryLose::~FactoryLose(){
-}
-
-FactoryHelp::FactoryHelp(){
-}
-
-FactoryHelp::~FactoryHelp(){
-}
-
-FactoryGate::FactoryGate(){
-}
-
-FactoryGate::~FactoryGate(){
-}
-
-
 ProductWin* FactoryWin::createProduct(){
 	ProductWin* temp = new ProductWin();
 	return temp;
@@ -46,8 +10,8 @@ ProductLose* FactoryLose::createProduct(){
 	return temp;
 }
 
-SceneProduct* FactoryHelp::createProduct(){
-	SceneProduct* temp = new ProductHelp();
+ProductHelp* FactoryHelp::createProduct(){
+	ProductHelp* temp = new ProductHelp();
 	return temp;
 }
 

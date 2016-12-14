@@ -9,49 +9,27 @@ using  std::string;
 USING_NS_CC;
 
 
-SceneProduct::SceneProduct(){
-}
-
-SceneProduct::~SceneProduct(){
-}
-
-ProductWin::ProductWin(){
-}
-
-ProductWin::~ProductWin(){
-}
-
-ProductLose::ProductLose(){
-}
-
-ProductLose::~ProductLose(){
-}
-
-ProductHelp::ProductHelp(){
-}
-
-ProductHelp::~ProductHelp(){
-}
-
-ProductGate::ProductGate(){
-}
-
-ProductGate::~ProductGate(){
-}
-
-ProductStart::ProductStart(){
-}
-
-ProductStart::~ProductStart(){
-}
-
-
 Scene* ProductWin::createScene() {
 	auto scene = Scene::create();
 	auto layer = ProductWin::create();
 	scene->addChild(layer);
 
 	return scene;
+}
+
+ProductWin* ProductWin::create() {
+
+	ProductWin *pRet = new ProductWin();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
 }
 
 bool ProductWin::init() {
@@ -88,6 +66,29 @@ void ProductWin::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, ProductGate::createScene()));
 }
 
+
+Scene* ProductLose::createScene() {
+	auto scene = Scene::create();
+	auto layer = ProductLose::create();
+	scene->addChild(layer);
+	return scene;
+}
+
+ProductLose* ProductLose::create() {
+
+	ProductLose *pRet = new ProductLose();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
+}
+
 bool ProductLose::init() {
 	if (!Layer::init()) {
 		return false;
@@ -120,6 +121,29 @@ bool ProductLose::init() {
 
 void ProductLose::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, ProductGate::createScene()));
+}
+
+Scene* ProductHelp::createScene() {
+	auto scene = Scene::create();
+	auto layer = ProductHelp::create();
+	scene->addChild(layer);
+
+	return scene;
+}
+
+ProductHelp* ProductHelp::create() {
+
+	ProductHelp *pRet = new ProductHelp(); 
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
 }
 
 void ProductHelp::createLabel(string content, string font, int size, int width, int height) {
@@ -178,6 +202,30 @@ bool ProductHelp::init() {
 
 void ProductHelp::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, ProductGate::createScene()));
+}
+
+Scene* ProductGate::createScene()
+{
+	auto scene = Scene::create();
+	auto layer = ProductGate::create();
+	scene->addChild(layer);
+
+	return scene;
+}
+
+ProductGate* ProductGate::create() {
+
+	ProductGate *pRet = new ProductGate();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
 }
 
 bool ProductGate::init() {
@@ -250,6 +298,21 @@ Scene* ProductStart::createScene() {
 	scene->addChild(layer);
 
 	return scene;
+}
+
+ProductStart* ProductStart::create() {
+
+	ProductStart *pRet = new ProductStart();
+	if (pRet && pRet->init()) {
+		pRet->autorelease();
+		return pRet;
+	}
+	else {
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+
 }
 
 bool ProductStart::init() {
