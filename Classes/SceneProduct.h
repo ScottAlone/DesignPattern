@@ -2,9 +2,11 @@
 #define _SCENEPRODUCT_H_
 
 #include "cocos2d.h"
+#include "SceneProduct.h"
 #include <string>
 using namespace cocos2d;
 using  std::string;
+using namespace std;
 USING_NS_CC;
 
 class SceneProduct : public Layer {
@@ -15,6 +17,34 @@ public:
 	virtual ~SceneProduct();
 
 public:
+
+	static Scene* createScene(int flag) {
+		if (flag == 1) {
+			auto scene = Scene::create();
+			auto layer = ProductHelp::create();
+			scene->addChild(layer);
+			return scene;
+		}
+		if (flag == 2) {
+			auto scene = Scene::create();
+			auto layer = ProductWin::create();
+			scene->addChild(layer);
+			return scene;
+		}
+		if (flag == 3) {
+			auto scene = Scene::create();
+			auto layer = ProductLose::create();
+			scene->addChild(layer);
+			return scene;
+		}
+		if (flag == 4) {
+			auto scene = Scene::create();
+			auto layer = ProductGate::create();
+			scene->addChild(layer);
+			return scene;
+		}
+
+	}
 
 };
 
@@ -55,7 +85,7 @@ public:
 
 };
 
-class ProductHelp :public SceneProduct{
+class ProductHelp {
 
 public:
 	ProductHelp();

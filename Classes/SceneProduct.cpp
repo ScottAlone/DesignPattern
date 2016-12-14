@@ -88,14 +88,6 @@ void ProductWin::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, ProductGate::createScene()));
 }
 
-
-Scene* ProductLose::createScene() {
-	auto scene = Scene::create();
-	auto layer = ProductLose::create();
-	scene->addChild(layer);
-	return scene;
-}
-
 bool ProductLose::init() {
 	if (!Layer::init()) {
 		return false;
@@ -128,14 +120,6 @@ bool ProductLose::init() {
 
 void ProductLose::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, ProductGate::createScene()));
-}
-
-Scene* ProductHelp::createScene() {
-	auto scene = Scene::create();
-	auto layer = ProductHelp::create();
-	scene->addChild(layer);
-
-	return scene;
 }
 
 void ProductHelp::createLabel(string content, string font, int size, int width, int height) {
@@ -194,15 +178,6 @@ bool ProductHelp::init() {
 
 void ProductHelp::menuCloseCallback(Ref* pSender) {
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, ProductGate::createScene()));
-}
-
-Scene* ProductGate::createScene()
-{
-	auto scene = Scene::create();
-	auto layer = ProductGate::create();
-	scene->addChild(layer);
-
-	return scene;
 }
 
 bool ProductGate::init() {

@@ -8,8 +8,12 @@ USING_NS_CC;
 class SceneManager {
 public:
 	void helpScene();
+
 	void winScene();
+
 	void loseScene();
+
 	void tollgateScene();
+
 };
 #endif

@@ -49,7 +49,7 @@ public:
 	~FactoryHelp();
 
 public:
-	ProductHelp* createProduct();
+	SceneProduct* createProduct();
 
 };
 

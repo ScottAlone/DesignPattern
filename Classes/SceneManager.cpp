@@ -5,22 +5,22 @@
 USING_NS_CC;
 
 void SceneManager::helpScene() {
-	FactoryHelp* fh = new FactoryHelp();
-	ProductHelp* product = fh->createProduct();
-	Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, product->createScene()));
+	SceneFactory* fh = new FactoryHelp();
+	SceneProduct* product = fh->createProduct();
+	Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0f, product->createScene(1)));
 }
 void SceneManager::winScene() {
-	FactoryWin* fw = new FactoryWin();
-	ProductWin* product = fw->createProduct();
-	Director::getInstance()->replaceScene(product->createScene());
+	SceneFactory* fh = new FactoryWin();
+	SceneProduct* product = fh->createProduct();
+	Director::getInstance()->replaceScene(product->createScene(2));
 }
 void SceneManager::loseScene() {
-	FactoryLose* fl = new FactoryLose();
-	ProductLose* product = fl->createProduct();
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, product->createScene()));
+	SceneFactory* fh = new FactoryLose();
+	SceneProduct* product = fh->createProduct();
+	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, product->createScene(3)));
 }
 void SceneManager::tollgateScene() {
-	FactoryGate* fg = new FactoryGate();
-	ProductGate* product = fg->createProduct();
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, product->createScene()));
+	SceneFactory* fh = new FactoryGate();
+	SceneProduct* product = fh->createProduct();
+	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, product->createScene(4)));
 }

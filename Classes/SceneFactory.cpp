@@ -46,8 +46,8 @@ ProductLose* FactoryLose::createProduct(){
 	return temp;
 }
 
-ProductHelp* FactoryHelp::createProduct(){
-	ProductHelp* temp = new ProductHelp();
+SceneProduct* FactoryHelp::createProduct(){
+	SceneProduct* temp = new ProductHelp();
 	return temp;
 }
 
